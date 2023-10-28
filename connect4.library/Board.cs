@@ -20,6 +20,7 @@ public class GameBoard
     }
 
     public List<Corrdinate>? WinningSet { get; set; }
+    public Corrdinate? LastMove { get; set; }
 
     private int[,] boardState = new int[RowMax, ColumnMax];
     public int[,] CurrentBoard 
@@ -57,6 +58,7 @@ public class GameBoard
         if (validation == null)
         {
             board = MakeMove(board, row, columnMove);
+            LastMove = new Corrdinate { Row = row, Column = columnMove };
             CheckWinner(board);
         }
         else

@@ -53,7 +53,14 @@ namespace connect4
                         }
                         else
                         {
-                            Console.ForegroundColor = board.CurrentBoard[row, col] == 1 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                            if (board.LastMove != null && board.LastMove.Row == row && board.LastMove.Column == col)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = board.CurrentBoard[row, col] == 1 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                            }
                         }
                         Console.Write(board.CurrentBoard[row, col]);
                         Console.ResetColor();
