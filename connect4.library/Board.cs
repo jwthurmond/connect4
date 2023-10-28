@@ -104,11 +104,20 @@ public class GameBoard
     private void CheckWinner(GameBoard board)
     {
         /*
-         * Horizontal Win Patterns
+          
+          Horizontal Win Patterns
           row,0|row,1|row,2|row,3
           row,1|row,2|row,3|row,4
           row,2|row,3|row,4|row,5
           row,3|row,4|row,5|row,6
+
+          Verticle Win Patterns
+          0,col|1,col|2,col|3,col
+          1,col|2,col|3,col|4,col
+          2,col|3,col|4,col|5,col
+
+
+
          */ 
             for (int row = 0; row < 6; row++)
             {
