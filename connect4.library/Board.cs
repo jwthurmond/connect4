@@ -87,7 +87,6 @@ namespace connect4.library
             }
             else
             {
-
                 throw new InvalidOperationException($"Invalid Move: {validation}");
             }
             return board;
