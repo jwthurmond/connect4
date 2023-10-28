@@ -4,16 +4,16 @@ public class GameBoard
     public GameBoard()
     {
         //initialize the board
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < RowMax; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < ColumnMax; j++)
             {
 
                 boardState[i, j] = 0;
             }
         }
     }
-    private int[,] boardState = new int[6, 7];
+    private int[,] boardState = new int[RowMax, ColumnMax];
     public int[,] CurrentBoard 
     {
         get 
@@ -21,7 +21,10 @@ public class GameBoard
             return boardState;
         }
     }
+    public const int RowMax = 6;
+    public const int ColumnMax = 7;
     public int MoveCount { get; private set; } = 0;
+    public int MaxMoves { get; private set; } = RowMax * ColumnMax;
     public int Player { get; private set; } = 1;
     public int Winner { get; private set; } = 0;
     public int GetPlayer()
@@ -82,11 +85,11 @@ public class GameBoard
 
     private string? IsValidMove(GameBoard board, int row, int column)
     {
-        if (row < 0 || row > 6)
+        if (row < 0 || row > RowMax)
         {
             return "Row is not valid";
         }
-        if (column < 0 || column > 7)
+        if (column < 0 || column > ColumnMax)
         {
             return "Column is not valid";
         }
@@ -126,22 +129,98 @@ public class GameBoard
 
 
 
-         */ 
-            for (int row = 0; row < 6; row++)
+         */
+        if (MoveCount > 6)
+        {
+            for (int row = 0; row < RowMax; row++)
             {
-                for (int col = 0; col < 7; col++)
+                for (int col = 0; col < ColumnMax; col++)
                 {
-                    //Console.Write(board.CurrentBoard[row, col]);
+                    if (board.boardState[row, col] != 0)
+                    {
+                        board.Winner = CheckHorizontalWin(board, row, col);
+
+                        if (board.Winner != 0)
+                        {
+                            return;
+                        }
+                        board.Winner = CheckVerticalWin(board, row, col);
+                        if (board.Winner != 0)
+                        {
+                            return;
+                        }
+                        board.Winner = CheckDiagonalWin(board, row, col);
+                        if (board.Winner != 0)
+                        {
+                            return;
+                        }
+                    }
                 }
             }
-        //check for a winner
-        board.Winner =0;
+        }
     }
 
-    public void CheckBoardForFourInARow()
+    private int CheckVerticalWin(GameBoard board, int row, int col)
     {
-        //check the board for four in a row
+        var checkPlayer = board.boardState[row, col];
+        var currentPlayer = checkPlayer;
+        var counter = 1;
+        while (counter < 3 && currentPlayer == checkPlayer && (row + counter < RowMax))
+        {
+            currentPlayer = board.boardState[row + counter, col];
+            counter++;
+        }
+        if (counter == 3 && currentPlayer == checkPlayer && row + counter < RowMax)
+        {
+            return checkPlayer;
+        }
+        return 0;
+    }
 
+    private int CheckHorizontalWin(GameBoard board, int row, int col)
+    {
+        var checkPlayer = board.boardState[row, col];
+        var currentPlayer = checkPlayer;
+        var counter = 1;
+        while(counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax))
+        {
+            currentPlayer = board.boardState[row, col + counter];
+            counter++;
+        }
+        if (counter == 3 && currentPlayer==checkPlayer && col + counter < ColumnMax)
+        {
+            return checkPlayer;
+        }
+        return 0;
+    }
+
+    private int CheckDiagonalWin(GameBoard board, int row, int col)
+    {
+        var checkPlayer = board.boardState[row, col];
+        var currentPlayer = checkPlayer;
+        var counter = 1;
+        //check diagonal down
+        while (counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row + counter < RowMax))
+        {
+            currentPlayer = board.boardState[row + counter, col + counter];
+            counter++;
+        }
+        if (counter == 3 && currentPlayer == checkPlayer)
+        {
+            return checkPlayer;
+        }
+        //check diagonal up
+        counter = 1;
+        while (counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row - counter > 0))
+        {
+            currentPlayer = board.boardState[row - counter, col + counter];
+            counter++;
+        }
+        if (counter == 3 && currentPlayer == checkPlayer)
+        {
+            return checkPlayer;
+        }
+        return 0;
     }
 
 }

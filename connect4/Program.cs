@@ -8,7 +8,7 @@ namespace connect4
         {
             var board = new GameBoard();
             PrintBoard(board);
-            while (board.Winner == 0)
+            while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
             {
                 try
                 {
@@ -19,8 +19,16 @@ namespace connect4
                 }
                 catch (Exception err)
                 {
-                    Console.WriteLine(err.Message);
+                    Console.WriteLine(err.ToString());
                 }
+            }
+            if(board.Winner!=0)
+            {
+                Console.WriteLine($"Player {board.Winner} Wins!");
+            }
+            else
+            {
+                Console.WriteLine($"No one wins )-:");
             }
         }
 
