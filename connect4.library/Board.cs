@@ -164,13 +164,13 @@ public class GameBoard
     {
         var checkPlayer = board.boardState[row, col];
         var currentPlayer = checkPlayer;
-        var counter = 1;
-        while (counter < 3 && currentPlayer == checkPlayer && (row + counter < RowMax))
+        var counter = 0;
+        while (counter < 4 && currentPlayer == checkPlayer && (row + counter < RowMax))
         {
             currentPlayer = board.boardState[row + counter, col];
             counter++;
         }
-        if (counter == 3 && currentPlayer == checkPlayer && row + counter < RowMax)
+        if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowMax)
         {
             return checkPlayer;
         }
@@ -181,13 +181,13 @@ public class GameBoard
     {
         var checkPlayer = board.boardState[row, col];
         var currentPlayer = checkPlayer;
-        var counter = 1;
-        while(counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax))
+        var counter = 0;
+        while(counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax))
         {
             currentPlayer = board.boardState[row, col + counter];
             counter++;
         }
-        if (counter == 3 && currentPlayer==checkPlayer && col + counter < ColumnMax)
+        if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnMax)
         {
             return checkPlayer;
         }
@@ -198,25 +198,25 @@ public class GameBoard
     {
         var checkPlayer = board.boardState[row, col];
         var currentPlayer = checkPlayer;
-        var counter = 1;
+        var counter = 0;
         //check diagonal down
-        while (counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row + counter < RowMax))
+        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row + counter < RowMax))
         {
             currentPlayer = board.boardState[row + counter, col + counter];
             counter++;
         }
-        if (counter == 3 && currentPlayer == checkPlayer)
+        if (counter == 4 && currentPlayer == checkPlayer)
         {
             return checkPlayer;
         }
         //check diagonal up
-        counter = 1;
-        while (counter < 3 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row - counter > 0))
+        counter = 0;
+        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row - counter > 0))
         {
             currentPlayer = board.boardState[row - counter, col + counter];
             counter++;
         }
-        if (counter == 3 && currentPlayer == checkPlayer)
+        if (counter == 4 && currentPlayer == checkPlayer)
         {
             return checkPlayer;
         }
