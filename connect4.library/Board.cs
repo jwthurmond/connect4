@@ -15,7 +15,6 @@ namespace connect4.library
                     board[i, j] = 0;
                 }
             }
-            Player = 1;
         }
         public int[,] board = new int[6, 7];
         public int[] column = new int[7];
@@ -23,8 +22,8 @@ namespace connect4.library
         public int[] diag = new int[12];
         public int[] rdiag = new int[12];
         public int[] moves = new int[42];
-        public int moveCount = 0;
-        public int Player { get; set; }
+        public int MoveCount { get; set; } = 0;
+        public int Player { get; set; } = 1;
         public int winner = 0;
         public int move = 0;
         public int moveRow = 0;
@@ -65,7 +64,7 @@ namespace connect4.library
 
         public int GetPlayer()
         {
-            var currentMove = moveCount + 1;
+            var currentMove = MoveCount + 1;
             if (currentMove % 2 == 0)
             {
                 return 2;
@@ -96,8 +95,8 @@ namespace connect4.library
         }
         private Board MakeMove(Board board, int row, int column)
         {
-            board.moveCount++;
-            if (board.moveCount % 2 == 0)
+            board.MoveCount++;
+            if (board.MoveCount % 2 == 0)
             {
                 board.Player = 2;
             }
