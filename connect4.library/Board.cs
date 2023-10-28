@@ -119,30 +119,6 @@ public class GameBoard
 
     private void CheckWinner(GameBoard board)
     {
-        /*
-          
-          Horizontal Win Patterns
-          row,0|row,1|row,2|row,3
-          row,1|row,2|row,3|row,4
-          row,2|row,3|row,4|row,5
-          row,3|row,4|row,5|row,6
-
-          Verticle Win Patterns
-          0,col|1,col|2,col|3,col
-          1,col|2,col|3,col|4,col
-          2,col|3,col|4,col|5,col
-
-          Horizontal Win Patterns
-          0,0|1,1|2,2|3,3
-          1,1|2,2|3,3|4,4
-          2,2|3,3|4,4|5,5
-          0,1|1,2|2,3|3,4
-          1,2|2,3|3,4|4,5
-          2,3|3,4|4,5|5,5
-
-
-
-         */
         if (MoveCount > 6)
         {
             for (int row = 0; row < RowMax; row++)
@@ -179,7 +155,7 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while (counter < 4 && currentPlayer == checkPlayer && (row + counter < RowMax))
+        while (counter < 4 && currentPlayer == checkPlayer && ((row + counter) < RowMax))
         {
             currentPlayer = board.boardState[row + counter, col];
             WinningSet.Add(new Corrdinate { Row = row + counter, Column = col });
@@ -199,14 +175,14 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while(counter < 4 && currentPlayer == checkPlayer && (col + counter <= ColumnMax))
+        while(counter < 4 && currentPlayer == checkPlayer && ((col + counter) < ColumnMax))
         {
             currentPlayer = board.boardState[row, col + counter];
             WinningSet.Add(new Corrdinate { Row = row , Column = col + counter });
 
             counter++;
         }
-        if (counter == 4 && currentPlayer==checkPlayer && col + counter <= ColumnMax)
+        if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnMax)
         {
             return checkPlayer;
         }
