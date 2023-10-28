@@ -103,7 +103,31 @@ public class GameBoard
 
     private void CheckWinner(GameBoard board)
     {
+        /*
+         * Horizontal Win Patterns
+          row,0|row,1|row,2|row,3
+          row,1|row,2|row,3|row,4
+          row,2|row,3|row,4|row,5
+          row,3|row,4|row,5|row,6
+
+
+
+         */ 
+            for (int row = 0; row < 6; row++)
+            {
+                for (int col = 0; col < 7; col++)
+                {
+                    //Console.Write(board.CurrentBoard[row, col]);
+                }
+            }
         //check for a winner
         board.Winner =0;
     }
+
+    public void CheckBoardForFourInARow()
+    {
+        //check the board for four in a row
+
+    }
+
 }
