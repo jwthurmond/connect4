@@ -116,6 +116,14 @@ public class GameBoard
           1,col|2,col|3,col|4,col
           2,col|3,col|4,col|5,col
 
+          Horizontal Win Patterns
+          0,0|1,1|2,2|3,3
+          1,1|2,2|3,3|4,4
+          2,2|3,3|4,4|5,5
+          0,1|1,2|2,3|3,4
+          1,2|2,3|3,4|4,5
+          2,3|3,4|4,5|5,5
+
 
 
          */ 
