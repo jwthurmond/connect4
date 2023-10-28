@@ -212,7 +212,7 @@ public class GameBoard
 
         return 0;
     }
-
+    //TODO: Update to fix diagonal win check
     private int CheckDiagonalWin(GameBoard board, int row, int col)
     {
         var checkPlayer = board.boardState[row, col];
