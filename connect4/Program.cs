@@ -35,13 +35,29 @@ namespace connect4
         private static void PrintBoard(GameBoard board)
         {
             //write the current state of the board to the console
-            Console.WriteLine(" 1 2 3 4 5 6 7");
+            Console.WriteLine("   1 2 3 4 5 6 7");
             for (int row = 0; row < 6; row++)
             {
-                Console.Write("|");
+                Console.Write($"{row + 1} |");
                 for (int col = 0; col < 7; col++)
                 {
-                    Console.Write(board.CurrentBoard[row, col]);
+                    if (board.CurrentBoard[row,col]==0)
+                    {
+                        Console.Write(" ");
+                    }
+                    else
+                    {
+                        if(board.WinningSet!=null && board.WinningSet.Exists(c=>c.Row==row && c.Column == col))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = board.CurrentBoard[row, col] == 1 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                        }
+                        Console.Write(board.CurrentBoard[row, col]);
+                        Console.ResetColor();
+                    }
                     Console.Write("|");
                 }
                 Console.WriteLine();

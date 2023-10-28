@@ -1,6 +1,11 @@
 ﻿namespace connect4.library;
 public class GameBoard
 {
+    public class Corrdinate
+    {
+        public int Row { get; set; }
+        public int Column { get; set; }
+    }
     public GameBoard()
     {
         //initialize the board
@@ -13,6 +18,9 @@ public class GameBoard
             }
         }
     }
+
+    public List<Corrdinate>? WinningSet { get; set; }
+
     private int[,] boardState = new int[RowMax, ColumnMax];
     public int[,] CurrentBoard 
     {
@@ -168,15 +176,18 @@ public class GameBoard
         var checkPlayer = board.boardState[row, col];
         var currentPlayer = checkPlayer;
         var counter = 0;
+        WinningSet = new List<Corrdinate>();
         while (counter < 4 && currentPlayer == checkPlayer && (row + counter < RowMax))
         {
             currentPlayer = board.boardState[row + counter, col];
+            WinningSet.Add(new Corrdinate { Row = row + counter, Column = col });
             counter++;
         }
         if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowMax)
         {
             return checkPlayer;
         }
+        WinningSet = null;
         return 0;
     }
 
@@ -185,15 +196,20 @@ public class GameBoard
         var checkPlayer = board.boardState[row, col];
         var currentPlayer = checkPlayer;
         var counter = 0;
+        WinningSet = new List<Corrdinate>();
         while(counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax))
         {
             currentPlayer = board.boardState[row, col + counter];
+            WinningSet.Add(new Corrdinate { Row = row , Column = col + counter });
+
             counter++;
         }
         if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnMax)
         {
             return checkPlayer;
         }
+        WinningSet = null;
+
         return 0;
     }
 
@@ -203,9 +219,11 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         //check diagonal down
+        WinningSet = new List<Corrdinate>();
         while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row + counter < RowMax))
         {
             currentPlayer = board.boardState[row + counter, col + counter];
+            WinningSet.Add(new Corrdinate { Row = row + counter, Column = col + counter});
             counter++;
         }
         if (counter == 4 && currentPlayer == checkPlayer)
@@ -213,16 +231,22 @@ public class GameBoard
             return checkPlayer;
         }
         //check diagonal up
+        WinningSet = new List<Corrdinate>();
+
         counter = 0;
         while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row - counter > 0))
         {
             currentPlayer = board.boardState[row - counter, col + counter];
+            WinningSet.Add(new Corrdinate { Row = row - counter, Column = col + counter });
+
             counter++;
         }
         if (counter == 4 && currentPlayer == checkPlayer)
         {
             return checkPlayer;
         }
+        WinningSet = null;
+
         return 0;
     }
 
