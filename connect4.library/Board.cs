@@ -177,13 +177,13 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while (counter < 4 && currentPlayer == checkPlayer && (row + counter < RowMax))
+        while (counter < 4 && currentPlayer == checkPlayer && (row + counter <= RowMax))
         {
             currentPlayer = board.boardState[row + counter, col];
             WinningSet.Add(new Corrdinate { Row = row + counter, Column = col });
             counter++;
         }
-        if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowMax)
+        if (counter == 4 && currentPlayer == checkPlayer && row + counter <= RowMax)
         {
             return checkPlayer;
         }
@@ -197,14 +197,14 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while(counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax))
+        while(counter < 4 && currentPlayer == checkPlayer && (col + counter <= ColumnMax))
         {
             currentPlayer = board.boardState[row, col + counter];
             WinningSet.Add(new Corrdinate { Row = row , Column = col + counter });
 
             counter++;
         }
-        if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnMax)
+        if (counter == 4 && currentPlayer==checkPlayer && col + counter <= ColumnMax)
         {
             return checkPlayer;
         }
