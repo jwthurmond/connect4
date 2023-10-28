@@ -16,7 +16,12 @@ namespace connect4.library
                 }
             }
         }
-        public int[,] board = new int[6, 7];
+        private int[,] board = new int[6, 7];
+        public int[,] BoardArray {
+            get {
+                return board;
+            }
+        }
         public int[] column = new int[7];
         public int[] row = new int[6];
         public int[] diag = new int[12];

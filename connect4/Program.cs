@@ -33,7 +33,7 @@ namespace connect4
                 Console.Write("|");
                 for (int j = 0; j < 7; j++)
                 {
-                    Console.Write(board.board[i, j]);
+                    Console.Write(board.BoardArray[i, j]);
                     Console.Write("|");
                 }
                 Console.WriteLine();
