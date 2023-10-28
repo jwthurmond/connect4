@@ -39,8 +39,10 @@ public class GameBoard
             return 1;
         }
     }
+
     public GameBoard Move(GameBoard board, int column)
     {
+        //TODO: update to return move result instead of board
         var columnMove = column - 1;
         var row = GetMoveRow(board, columnMove);
         var validation = IsValidMove(board, row, columnMove);
@@ -51,6 +53,7 @@ public class GameBoard
         }
         else
         {
+            //TODO: update move result instead of throwing exception
             throw new InvalidOperationException($"Invalid Move: {validation}");
         }
         return board;
