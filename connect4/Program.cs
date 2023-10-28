@@ -6,9 +6,9 @@ namespace connect4
     {
         static void Main(string[] args)
         {
-            var board = new Board();
+            var board = new GameBoard();
             PrintBoard(board);
-            while (board.winner == 0)
+            while (board.Winner == 0)
             {
                 try
                 {
@@ -24,7 +24,7 @@ namespace connect4
             }
         }
 
-        private static void PrintBoard(Board board)
+        private static void PrintBoard(GameBoard board)
         {
             //write the current state of the board to the console
             Console.WriteLine(" 1 2 3 4 5 6 7");
@@ -33,7 +33,7 @@ namespace connect4
                 Console.Write("|");
                 for (int j = 0; j < 7; j++)
                 {
-                    Console.Write(board.BoardArray[i, j]);
+                    Console.Write(board.CurrentBoard[i, j]);
                     Console.Write("|");
                 }
                 Console.WriteLine();
