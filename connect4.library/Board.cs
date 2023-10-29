@@ -53,18 +53,26 @@ public class GameBoard
     {
         //TODO: update to return move result instead of board
         var columnMove = column - 1;
-        var row = GetMoveRow(board, columnMove);
-        var validation = IsValidMove(board, row, columnMove);
+        var validation = IsValidColumn(columnMove);
         if (validation == null)
         {
-            board = MakeMove(board, row, columnMove);
-            LastMove = new Corrdinate { Row = row, Column = columnMove };
-            CheckWinner(board);
+            var row = GetMoveRow(board, columnMove);
+            validation = IsValidMove(board, row, columnMove);
+            if (validation == null)
+            {
+                board = MakeMove(board, row, columnMove);
+                LastMove = new Corrdinate { Row = row, Column = columnMove };
+                CheckWinner(board);
+            }
+            else
+            {
+                //TODO: update move result instead of throwing exception
+                throw new InvalidOperationException($"Invalid Move: {validation}");
+            }
         }
         else
         {
-            //TODO: update move result instead of throwing exception
-            throw new InvalidOperationException($"Invalid Move: {validation}");
+              throw new InvalidOperationException($"Invalid Move: {validation}");
         }
         return board;
 
@@ -96,13 +104,23 @@ public class GameBoard
         return 100;
     }
 
+    private string? IsValidColumn(int column)
+    {
+        if (column < 0 || column + 1 > ColumnCountMax)
+        {
+            return "Column is not valid";
+        }
+        return null;
+    }
+
     private string? IsValidMove(GameBoard board, int row, int column)
     {
-        if (row < 0 || row > RowCountMax)
+        if (row < 0 || row + 1 > RowCountMax)
         {
             return "Row is not valid";
         }
-        if (column < 0 || column > ColumnCountMax)
+
+        if (column < 0 || column + 1 > ColumnCountMax)
         {
             return "Column is not valid";
         }
