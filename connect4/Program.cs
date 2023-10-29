@@ -24,7 +24,7 @@ namespace connect4
                 }
                 catch (Exception err)
                 {
-                    Console.WriteLine(err.ToString());
+                    Console.WriteLine(err.Message);
                 }
             }
             if(board.Winner!=0)

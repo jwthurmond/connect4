@@ -145,6 +145,10 @@ public class GameBoard
                 {
                     if (board.boardState[row, col] != 0)
                     {
+                        if (row == 5)
+                        {
+                            var test = "";
+                        }
                         board.Winner = CheckHorizontalWin(board, row, col);
 
                         if (board.Winner != 0)
@@ -179,7 +183,7 @@ public class GameBoard
             WinningSet.Add(new Corrdinate { Row = row + counter, Column = col });
             counter++;
         }
-        if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowCountMax)
+        if (counter == 4 && currentPlayer == checkPlayer && row + counter <= RowCountMax)
         {
             return checkPlayer;
         }
@@ -200,7 +204,7 @@ public class GameBoard
 
             counter++;
         }
-        if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnCountMax)
+        if (counter == 4 && currentPlayer==checkPlayer && col + counter <= ColumnCountMax)
         {
             return checkPlayer;
         }
