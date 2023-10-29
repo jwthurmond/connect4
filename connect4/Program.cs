@@ -4,7 +4,7 @@ namespace connect4
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var board = new GameBoard();
             PrintBoard(board);
@@ -13,7 +13,12 @@ namespace connect4
                 try
                 {
                     Console.Write($"Player {board.GetPlayer()} Enter the Column:");
-                    var column = int.Parse(Console.ReadLine());
+                    var readLine = Console.ReadLine();
+                    if (readLine == null)
+                    {
+                        continue;
+                    }
+                    var column = int.Parse(readLine);
                     board = board.Move(board, column);
                     PrintBoard(board);
                 }

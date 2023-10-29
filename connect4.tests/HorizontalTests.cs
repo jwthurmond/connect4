@@ -9,12 +9,12 @@ namespace connect4.tests
         [Fact]
         public void TestHorizontalWinRow1Column4To7()
         {
-            GameBoard testBoard = new GameBoard();
+            GameBoard testBoard = new();
 
             //Arrange
             var expected = 1;
             _ = testBoard.Move(testBoard, 4); //player 1
-            _ = testBoard.Move(testBoard, 4);
+            _ = testBoard.Move(testBoard, 4); //player 2
             _ = testBoard.Move(testBoard, 5); //player 1
             _ = testBoard.Move(testBoard, 5); //player 2
             _ = testBoard.Move(testBoard, 6); //player 1
@@ -26,7 +26,7 @@ namespace connect4.tests
         [Fact]
         public void TestHorizontalWinRow1Column1To4()
         {
-            GameBoard testBoard = new GameBoard();
+            GameBoard testBoard = new();
 
             //Arrange
             var expected = 1;
@@ -44,7 +44,7 @@ namespace connect4.tests
         [Fact]
         public void TestHorizontalWinRow2Column1To4()
         {
-            GameBoard testBoard = new GameBoard();
+            GameBoard testBoard = new();
 
             //Arrange
              var expected = 2;

@@ -22,7 +22,7 @@ public class GameBoard
     public List<Corrdinate>? WinningSet { get; set; }
     public Corrdinate? LastMove { get; set; }
 
-    private int[,] boardState = new int[RowCountMax, ColumnCountMax];
+    private readonly int[,] boardState = new int[RowCountMax, ColumnCountMax];
     public int[,] CurrentBoard 
     {
         get 
@@ -77,7 +77,7 @@ public class GameBoard
         return board;
 
     }
-    private GameBoard MakeMove(GameBoard board, int row, int column)
+    private static GameBoard MakeMove(GameBoard board, int row, int column)
     {
         board.MoveCount++;
         if (board.MoveCount % 2 == 0)
@@ -91,7 +91,7 @@ public class GameBoard
         board.boardState[row, column] = board.Player;
         return board;
     }
-    private int GetMoveRow(GameBoard board, int columnMove)
+    private static int GetMoveRow(GameBoard board, int columnMove)
     {
         //get the row of the move
         for (int i = 5; i >= 0; i--)
@@ -104,7 +104,7 @@ public class GameBoard
         return 100;
     }
 
-    private string? IsValidColumn(int column)
+    private static string? IsValidColumn(int column)
     {
         if (column < 0 || column + 1 > ColumnCountMax)
         {
@@ -113,7 +113,7 @@ public class GameBoard
         return null;
     }
 
-    private string? IsValidMove(GameBoard board, int row, int column)
+    private static string? IsValidMove(GameBoard board, int row, int column)
     {
         if (row < 0 || row + 1 > RowCountMax)
         {
