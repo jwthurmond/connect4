@@ -55,8 +55,6 @@ namespace connect4.tests
             _ = testBoard.Move(testBoard, 6); //player 1
             _ = testBoard.Move(testBoard, 6); //player 2
             _ = testBoard.Move(testBoard, 1); //player 1
-            _ = testBoard.Move(testBoard, 7); //player 2
-            _ = testBoard.Move(testBoard, 1); //player 1
             var board = testBoard.Move(testBoard, 7); //player 2
             board.Winner.Should().Be(expected);
         }

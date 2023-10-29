@@ -9,9 +9,9 @@ public class GameBoard
     public GameBoard()
     {
         //initialize the board
-        for (int i = 0; i < RowMax; i++)
+        for (int i = 0; i < RowCountMax; i++)
         {
-            for (int j = 0; j < ColumnMax; j++)
+            for (int j = 0; j < ColumnCountMax; j++)
             {
 
                 boardState[i, j] = 0;
@@ -22,7 +22,7 @@ public class GameBoard
     public List<Corrdinate>? WinningSet { get; set; }
     public Corrdinate? LastMove { get; set; }
 
-    private int[,] boardState = new int[RowMax, ColumnMax];
+    private int[,] boardState = new int[RowCountMax, ColumnCountMax];
     public int[,] CurrentBoard 
     {
         get 
@@ -30,10 +30,10 @@ public class GameBoard
             return boardState;
         }
     }
-    public const int RowMax = 6;
-    public const int ColumnMax = 7;
+    public const int RowCountMax = 6;
+    public const int ColumnCountMax = 7;
     public int MoveCount { get; private set; } = 0;
-    public int MaxMoves { get; private set; } = RowMax * ColumnMax;
+    public int MaxMoves { get; private set; } = RowCountMax * ColumnCountMax;
     public int Player { get; private set; } = 1;
     public int Winner { get; private set; } = 0;
     public int GetPlayer()
@@ -98,11 +98,11 @@ public class GameBoard
 
     private string? IsValidMove(GameBoard board, int row, int column)
     {
-        if (row < 0 || row > RowMax)
+        if (row < 0 || row > RowCountMax)
         {
             return "Row is not valid";
         }
-        if (column < 0 || column > ColumnMax)
+        if (column < 0 || column > ColumnCountMax)
         {
             return "Column is not valid";
         }
@@ -121,9 +121,9 @@ public class GameBoard
     {
         if (MoveCount > 6)
         {
-            for (int row = 0; row < RowMax; row++)
+            for (int row = 0; row < RowCountMax; row++)
             {
-                for (int col = 0; col < ColumnMax; col++)
+                for (int col = 0; col < ColumnCountMax; col++)
                 {
                     if (board.boardState[row, col] != 0)
                     {
@@ -155,13 +155,13 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while (counter < 4 && currentPlayer == checkPlayer && ((row + counter) < RowMax))
+        while (counter < 4 && currentPlayer == checkPlayer && ((row + counter) < RowCountMax))
         {
             currentPlayer = board.boardState[row + counter, col];
             WinningSet.Add(new Corrdinate { Row = row + counter, Column = col });
             counter++;
         }
-        if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowMax)
+        if (counter == 4 && currentPlayer == checkPlayer && row + counter < RowCountMax)
         {
             return checkPlayer;
         }
@@ -175,14 +175,14 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while(counter < 4 && currentPlayer == checkPlayer && ((col + counter) <= ColumnMax))
+        while(counter < 4 && currentPlayer == checkPlayer && ((col + counter) < ColumnCountMax))
         {
             currentPlayer = board.boardState[row, col + counter];
             WinningSet.Add(new Corrdinate { Row = row , Column = col + counter });
 
             counter++;
         }
-        if (counter == 4 && currentPlayer==checkPlayer && col + counter <= ColumnMax)
+        if (counter == 4 && currentPlayer==checkPlayer && col + counter < ColumnCountMax)
         {
             return checkPlayer;
         }
@@ -198,7 +198,7 @@ public class GameBoard
         var counter = 0;
         //check diagonal down
         WinningSet = new List<Corrdinate>();
-        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row + counter < RowMax))
+        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row + counter < RowCountMax))
         {
             currentPlayer = board.boardState[row + counter, col + counter];
             WinningSet.Add(new Corrdinate { Row = row + counter, Column = col + counter});
@@ -212,7 +212,7 @@ public class GameBoard
         WinningSet = new List<Corrdinate>();
 
         counter = 0;
-        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnMax) && (row - counter > 0))
+        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row - counter > 0))
         {
             currentPlayer = board.boardState[row - counter, col + counter];
             WinningSet.Add(new Corrdinate { Row = row - counter, Column = col + counter });
