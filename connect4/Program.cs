@@ -19,7 +19,13 @@ namespace connect4
                 {
                     try
                     {
-                        Console.Write($"Player {board.GetPlayer()} Enter the Column:");
+                        if (board.GetPlayer() == 1)
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        else
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write($"Player {board.GetPlayer()}");
+                        Console.ResetColor();
+                        Console.Write(" Enter the Column:");
                         var readLine = Console.ReadLine();
                         if (readLine == null)
                         {
@@ -94,16 +100,18 @@ namespace connect4
                         }
                         else
                         {
+                            if (board.CurrentBoard[row, col] == 1) // player 1
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                            }
+                            else // player 2
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
                             if (board.LastMove != null && board.LastMove.Row == row && board.LastMove.Column == col)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Blue;
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = board.CurrentBoard[row, col] == 1 ? ConsoleColor.Red : ConsoleColor.Yellow;
-                            }
+                                Console.BackgroundColor = ConsoleColor.DarkGray;
                         }
-                        Console.Write(board.CurrentBoard[row, col]);
+                        Console.Write(0);
                         Console.ResetColor();
                     }
                     Console.Write("|");
