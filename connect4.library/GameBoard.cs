@@ -21,15 +21,11 @@ public class GameBoard
         }
     }
 
-    public List<Corrdinate>? WinningSet { get; set; }
-    public Corrdinate? LastMove { get; set; }
-
+    public List<Corrdinate>? WinningSet { get; private set; }
+    public Corrdinate? LastMove { get; private set; }
     private readonly int[,] boardState = new int[RowCountMax, ColumnCountMax];
-    public int[,] CurrentBoard {
-        get {
-            return boardState;
-        }
-    }
+
+    public int[,] CurrentBoard { get { return boardState; } }
     public const int RowCountMax = 6;
     public const int ColumnCountMax = 7;
     public const int InvalidMoveCountMax = 5;
@@ -70,13 +66,9 @@ public class GameBoard
                 var dnf = CheckInvalidMoveCount(board);
                 if (dnf != 0)
                 {
-                    moveResult.ErrorMessage = "Too many invalid moves game over";
-                    moveResult.BoardState = board;
-                    return moveResult;
-                }
-                moveResult.IsValid = false;
-                moveResult.ErrorMessage = "Invalid Move: Column is full";
-                return moveResult;
+                    return ProcessError("Too many invalid moves game over");                    
+                }                
+                return ProcessError("Invalid Move: Column is full");
             }
             validation = IsValidMove(board, row, columnMove);
             if (validation == null)
@@ -92,24 +84,29 @@ public class GameBoard
                 var dnf = CheckInvalidMoveCount(board);
                 if (dnf != 0)
                 {
-                    moveResult.ErrorMessage = "Too many invalid moves game over";
-                    moveResult.BoardState = board;
-                    return moveResult;
+                    return ProcessError("Too many invalid moves game over");
                 }
-                moveResult.IsValid = false;
-                moveResult.ErrorMessage = $"Invalid Move: {validation}";
-                return moveResult;
+                return ProcessError($"Invalid Move: {validation}");
             }
         }
         else
-        {
-            moveResult.IsValid = false;
-            moveResult.ErrorMessage = $"Invalid Move: {validation}";
-            return moveResult;
+        {            
+            return ProcessError($"Invalid Move: {validation}");
         }
         moveResult.BoardState = board;
         return moveResult;
 
+    }
+
+
+    private MoveResult ProcessError(string errorMessage)
+    {
+        return new MoveResult
+        {
+            BoardState = this,
+            ErrorMessage = errorMessage,
+            IsValid = false
+        };
     }
 
     private int CheckInvalidMoveCount(GameBoard board)
