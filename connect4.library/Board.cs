@@ -62,7 +62,7 @@ public class GameBoard
             {
                 board = MakeMove(board, row, columnMove);
                 LastMove = new Corrdinate { Row = row, Column = columnMove };
-                CheckWinner(board);
+                board.Winner = CheckWinner(board);
             }
             else
             {
@@ -135,7 +135,7 @@ public class GameBoard
         }
     }
 
-    private void CheckWinner(GameBoard board)
+    private int CheckWinner(GameBoard board)
     {
         if (MoveCount > 6)
         {
@@ -150,22 +150,23 @@ public class GameBoard
 
                         if (board.Winner != 0)
                         {
-                            return;
+                            return board.Winner;
                         }
                         board.Winner = CheckVerticalWin(board, row, col);
                         if (board.Winner != 0)
                         {
-                            return;
+                            return board.Winner;
                         }
                         board.Winner = CheckDiagonalWin(board, row, col);
                         if (board.Winner != 0)
                         {
-                            return;
+                            return board.Winner;
                         }
                     }
                 }
             }
         }
+        return 0;
     }
 
     private int CheckVerticalWin(GameBoard board, int row, int col)

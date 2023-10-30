@@ -18,5 +18,25 @@ namespace connect4.tests
             }
             
         }
+
+        [Fact]
+        public void TestColumnUsedUp()
+        {
+            GameBoard testBoard = new GameBoard();
+            _ = testBoard.Move(testBoard, 1);
+            _ = testBoard.Move(testBoard, 1);
+            _ = testBoard.Move(testBoard, 1);
+            _ = testBoard.Move(testBoard, 1);
+            _ = testBoard.Move(testBoard, 1);
+            _ = testBoard.Move(testBoard, 1);
+           
+            //Arrange
+            try { _ = testBoard.Move(testBoard, 1); }
+            catch (Exception ex)
+            {
+                Assert.Contains("Row is not valid", ex.Message);
+            }
+            
+        }
     }
 }
