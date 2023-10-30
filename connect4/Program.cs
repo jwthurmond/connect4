@@ -82,7 +82,13 @@ namespace connect4
         private static void PrintBoard(GameBoard board)
         {
             //write the current state of the board to the console
-            Console.WriteLine("   1 2 3 4 5 6 7");
+            Console.Write("   ");
+            for(int i=1;i<=GameBoard.ColumnCountMax;i++)
+            {
+                Console.Write($"{i} ");
+            }
+            Console.WriteLine();
+            
             for (int row = 0; row < GameBoard.RowCountMax; row++)
             {
                 Console.Write($"{row + 1} |");
