@@ -83,10 +83,10 @@ namespace connect4
         {
             //write the current state of the board to the console
             Console.WriteLine("   1 2 3 4 5 6 7");
-            for (int row = 0; row < 6; row++)
+            for (int row = 0; row < GameBoard.RowCountMax; row++)
             {
                 Console.Write($"{row + 1} |");
-                for (int col = 0; col < 7; col++)
+                for (int col = 0; col < GameBoard.ColumnCountMax; col++)
                 {
                     if (board.CurrentBoard[row,col]==0)
                     {

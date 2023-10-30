@@ -98,7 +98,7 @@ public class GameBoard
     private static int GetMoveRow(GameBoard board, int columnMove)
     {
         //get the row of the move
-        for (int i = 5; i >= 0; i--)
+        for (int i = (GameBoard.RowCountMax-1); i >= 0; i--)
         {
             if (board.boardState[i, columnMove] == 0)
             {
