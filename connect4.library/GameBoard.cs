@@ -51,9 +51,14 @@ public class GameBoard
         }
     }
 
-    public GameBoard Move(GameBoard board, int column)
+    public MoveResult Move(GameBoard board, int column)
     {
-        //TODO: update to return move result instead of board
+        var moveResult = new MoveResult()
+        {
+            BoardState = board,
+            IsValid = true,
+            ErrorMessage = ""
+        };
         var columnMove = column - 1;
         var validation = IsValidColumn(columnMove);
         if (validation == null)
@@ -63,13 +68,15 @@ public class GameBoard
             {
                 InvalidMoveCount++;
                 var dnf = CheckInvalidMoveCount(board);
-                //TODO: update move result instead of throwing exception
                 if (dnf != 0)
                 {
-                    throw new InvalidOperationException($"Too many invalid moves game over");
-
+                    moveResult.ErrorMessage = "Too many invalid moves game over";
+                    moveResult.BoardState = board;
+                    return moveResult;
                 }
-                throw new InvalidOperationException($"Invalid Move: Column is full");
+                moveResult.IsValid = false;
+                moveResult.ErrorMessage = "Invalid Move: Column is full";
+                return moveResult;
             }
             validation = IsValidMove(board, row, columnMove);
             if (validation == null)
@@ -83,27 +90,25 @@ public class GameBoard
             {
                 InvalidMoveCount++;
                 var dnf = CheckInvalidMoveCount(board);
-                //TODO: update move result instead of throwing exception
                 if (dnf != 0)
                 {
-                    throw new InvalidOperationException($"Too many invalid moves game over");
-
+                    moveResult.ErrorMessage = "Too many invalid moves game over";
+                    moveResult.BoardState = board;
+                    return moveResult;
                 }
-                throw new InvalidOperationException($"Invalid Move: {validation}");
+                moveResult.IsValid = false;
+                moveResult.ErrorMessage = $"Invalid Move: {validation}";
+                return moveResult;
             }
         }
         else
         {
-            InvalidMoveCount++;
-            var dnf = CheckInvalidMoveCount(board);
-            //TODO: update move result instead of throwing exception
-            if (dnf != 0)
-            {
-                throw new InvalidOperationException($"Too many invalid moves game over");
-            }
-            throw new InvalidOperationException($"Invalid Move: {validation}");
+            moveResult.IsValid = false;
+            moveResult.ErrorMessage = $"Invalid Move: {validation}";
+            return moveResult;
         }
-        return board;
+        moveResult.BoardState = board;
+        return moveResult;
 
     }
 
