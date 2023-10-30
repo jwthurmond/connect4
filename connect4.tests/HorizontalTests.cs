@@ -19,8 +19,8 @@ namespace connect4.tests
             _ = testBoard.Move(testBoard, 5); //player 2
             _ = testBoard.Move(testBoard, 6); //player 1
             _ = testBoard.Move(testBoard, 6); //player 2
-            var board = testBoard.Move(testBoard, 7); //player 1
-            board.Winner.Should().Be(expected);
+            var boardResult = testBoard.Move(testBoard, 7); //player 1
+            boardResult.BoardState.Winner.Should().Be(expected);
         }
 
         [Fact]
@@ -36,8 +36,8 @@ namespace connect4.tests
             _ = testBoard.Move(testBoard, 2); //player 2
             _ = testBoard.Move(testBoard, 3); //player 1
             _ = testBoard.Move(testBoard, 3); //player 2
-            var board = testBoard.Move(testBoard, 4); //player 1
-            board.Winner.Should().Be(expected);
+            var boardResult = testBoard.Move(testBoard, 4); //player 1
+            boardResult.BoardState.Winner.Should().Be(expected);
         }
 
 
@@ -57,8 +57,8 @@ namespace connect4.tests
             _ = testBoard.Move(testBoard, 1); //player 1
             _ = testBoard.Move(testBoard, 7); //player 2
             _ = testBoard.Move(testBoard, 1); //player 1
-            var board = testBoard.Move(testBoard, 7); //player 2
-            board.Winner.Should().Be(expected);
+            var boardResult = testBoard.Move(testBoard, 7); //player 2
+            boardResult.BoardState.Winner.Should().Be(expected);
         }
 
 

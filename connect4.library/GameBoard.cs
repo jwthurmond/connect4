@@ -49,9 +49,14 @@ public class GameBoard
         }
     }
 
-    public GameBoard Move(GameBoard board, int column)
+    public MoveResult Move(GameBoard board, int column)
     {
-        //TODO: update to return move result instead of board
+        var moveResult = new MoveResult()
+        {
+            BoardState = board,
+            IsValid = true,
+            ErrorMessage = ""
+        };
         var columnMove = column - 1;
         var validation = IsValidColumn(columnMove);
         if (validation == null)
@@ -59,7 +64,9 @@ public class GameBoard
             var row = GetMoveRow(board, columnMove);
             if(row == 100)
             {
-                throw new InvalidOperationException($"Invalid Move: Column is full");
+                moveResult.IsValid = false;
+                moveResult.ErrorMessage = "Invalid Move: Column is full";
+                return moveResult;
             }
             validation = IsValidMove(board, row, columnMove);
             if (validation == null)
@@ -70,15 +77,19 @@ public class GameBoard
             }
             else
             {
-                //TODO: update move result instead of throwing exception
-                throw new InvalidOperationException($"Invalid Move: {validation}");
+                moveResult.IsValid = false;
+                moveResult.ErrorMessage = $"Invalid Move: {validation}";
+                return moveResult;
             }
         }
         else
         {
-              throw new InvalidOperationException($"Invalid Move: {validation}");
+            moveResult.IsValid = false;
+            moveResult.ErrorMessage = $"Invalid Move: {validation}";
+            return moveResult;
         }
-        return board;
+        moveResult.BoardState = board;
+        return moveResult;
 
     }
     private static GameBoard MakeMove(GameBoard board, int row, int column)
