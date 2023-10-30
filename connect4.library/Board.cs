@@ -145,10 +145,7 @@ public class GameBoard
                 {
                     if (board.boardState[row, col] != 0)
                     {
-                        if (row == 5)
-                        {
-                            var test = "";
-                        }
+                        
                         board.Winner = CheckHorizontalWin(board, row, col);
 
                         if (board.Winner != 0)
