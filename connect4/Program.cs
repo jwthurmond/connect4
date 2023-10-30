@@ -7,9 +7,9 @@ namespace connect4
         static void Main()
         {
             var board = new GameBoard();
-            var player1WinCount=0;
-            var player2WinCount=0;
-            var drawCount=0;
+            var player1WinCount = 0;
+            var player2WinCount = 0;
+            var drawCount = 0;
             var keepPlaying = true;
 
             while (keepPlaying)
@@ -20,9 +20,14 @@ namespace connect4
                     try
                     {
                         if (board.GetPlayer() == 1)
+                        {
                             Console.ForegroundColor = ConsoleColor.Red;
+                        }
                         else
+                        {
                             Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
+
                         Console.Write($"Player {board.GetPlayer()}");
                         Console.ResetColor();
                         Console.Write(" Enter the Column:");
@@ -68,7 +73,7 @@ namespace connect4
                 PrintStats(player1WinCount, player2WinCount, drawCount);
                 Console.Write($"Type 'Q' or 'q' to quit:");
                 var keepPlayingGame = Console.ReadLine();
-                if(keepPlayingGame!=null && keepPlayingGame.ToLower() == "q")
+                if (keepPlayingGame != null && keepPlayingGame.ToLower() == "q")
                 {
                     keepPlaying = false;
                 }
@@ -91,24 +96,24 @@ namespace connect4
         {
             //write the current state of the board to the console
             Console.Write("   ");
-            for(int i=1;i<=GameBoard.ColumnCountMax;i++)
+            for (int i = 1; i <= GameBoard.ColumnCountMax; i++)
             {
                 Console.Write($"{i} ");
             }
             Console.WriteLine();
-            
+
             for (int row = 0; row < GameBoard.RowCountMax; row++)
             {
                 Console.Write($"{row + 1} |");
                 for (int col = 0; col < GameBoard.ColumnCountMax; col++)
                 {
-                    if (board.CurrentBoard[row,col]==0)
+                    if (board.CurrentBoard[row, col] == 0)
                     {
                         Console.Write(" ");
                     }
                     else
                     {
-                        if(board.WinningSet!=null && board.WinningSet.Exists(c=>c.Row==row && c.Column == col))
+                        if (board.WinningSet != null && board.WinningSet.Exists(c => c.Row == row && c.Column == col))
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                         }

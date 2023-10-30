@@ -1,4 +1,6 @@
-﻿namespace connect4.library;
+﻿using System.Reflection;
+
+namespace connect4.library;
 public class GameBoard
 {
     public class Corrdinate
@@ -19,20 +21,16 @@ public class GameBoard
         }
     }
 
-    public List<Corrdinate>? WinningSet { get; set; }
-    public Corrdinate? LastMove { get; set; }
-
+    public List<Corrdinate>? WinningSet { get; private set; }
+    public Corrdinate? LastMove { get; private set; }
     private readonly int[,] boardState = new int[RowCountMax, ColumnCountMax];
-    public int[,] CurrentBoard 
-    {
-        get 
-        {
-            return boardState;
-        }
-    }
+
+    public int[,] CurrentBoard { get { return boardState; } }
     public const int RowCountMax = 6;
     public const int ColumnCountMax = 7;
+    public const int InvalidMoveCountMax = 5;
     public int MoveCount { get; private set; } = 0;
+    public int InvalidMoveCount { get; private set; } = 0;
     public int MaxMoves { get; private set; } = RowCountMax * ColumnCountMax;
     public int Player { get; private set; } = 1;
     public int Winner { get; private set; } = 0;
@@ -62,36 +60,76 @@ public class GameBoard
         if (validation == null)
         {
             var row = GetMoveRow(board, columnMove);
-            if(row == 100)
+            if (row == 100)
             {
-                moveResult.IsValid = false;
-                moveResult.ErrorMessage = "Invalid Move: Column is full";
-                return moveResult;
+                InvalidMoveCount++;
+                var dnf = CheckInvalidMoveCount(board);
+                if (dnf != 0)
+                {
+                    return ProcessError("Too many invalid moves game over");                    
+                }                
+                return ProcessError("Invalid Move: Column is full");
             }
             validation = IsValidMove(board, row, columnMove);
             if (validation == null)
             {
+                InvalidMoveCount = 0;
                 board = MakeMove(board, row, columnMove);
                 LastMove = new Corrdinate { Row = row, Column = columnMove };
                 board.Winner = CheckWinner(board);
             }
             else
             {
-                moveResult.IsValid = false;
-                moveResult.ErrorMessage = $"Invalid Move: {validation}";
-                return moveResult;
+                InvalidMoveCount++;
+                var dnf = CheckInvalidMoveCount(board);
+                if (dnf != 0)
+                {
+                    return ProcessError("Too many invalid moves game over");
+                }
+                return ProcessError($"Invalid Move: {validation}");
             }
         }
         else
-        {
-            moveResult.IsValid = false;
-            moveResult.ErrorMessage = $"Invalid Move: {validation}";
-            return moveResult;
+        {            
+            return ProcessError($"Invalid Move: {validation}");
         }
         moveResult.BoardState = board;
         return moveResult;
 
     }
+
+
+    private MoveResult ProcessError(string errorMessage)
+    {
+        return new MoveResult
+        {
+            BoardState = this,
+            ErrorMessage = errorMessage,
+            IsValid = false
+        };
+    }
+
+    private int CheckInvalidMoveCount(GameBoard board)
+    {
+        var winner = 0;
+        if (board.InvalidMoveCount >= InvalidMoveCountMax)
+        {
+            var currentPlayer = GetPlayer();
+            if (currentPlayer == 1)
+            {
+                winner = 2;
+            }
+            else
+            {
+                winner = 1;
+            }
+        }
+        board.Winner = winner;
+        return winner;
+    }
+
+
+
     private static GameBoard MakeMove(GameBoard board, int row, int column)
     {
         board.MoveCount++;
@@ -109,7 +147,7 @@ public class GameBoard
     private static int GetMoveRow(GameBoard board, int columnMove)
     {
         //get the row of the move
-        for (int i = (GameBoard.RowCountMax-1); i >= 0; i--)
+        for (int i = (GameBoard.RowCountMax - 1); i >= 0; i--)
         {
             if (board.boardState[i, columnMove] == 0)
             {
@@ -160,7 +198,7 @@ public class GameBoard
                 {
                     if (board.boardState[row, col] != 0)
                     {
-                        
+
                         board.Winner = CheckHorizontalWin(board, row, col);
 
                         if (board.Winner != 0)
@@ -210,14 +248,14 @@ public class GameBoard
         var currentPlayer = checkPlayer;
         var counter = 0;
         WinningSet = new List<Corrdinate>();
-        while(counter < 4 && currentPlayer == checkPlayer && ((col + counter) < ColumnCountMax))
+        while (counter < 4 && currentPlayer == checkPlayer && ((col + counter) < ColumnCountMax))
         {
             currentPlayer = board.boardState[row, col + counter];
-            WinningSet.Add(new Corrdinate { Row = row , Column = col + counter });
+            WinningSet.Add(new Corrdinate { Row = row, Column = col + counter });
 
             counter++;
         }
-        if (counter == 4 && currentPlayer==checkPlayer && col + counter <= ColumnCountMax)
+        if (counter == 4 && currentPlayer == checkPlayer && col + counter <= ColumnCountMax)
         {
             return checkPlayer;
         }
@@ -236,7 +274,7 @@ public class GameBoard
         while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row + counter < RowCountMax))
         {
             currentPlayer = board.boardState[row + counter, col + counter];
-            WinningSet.Add(new Corrdinate { Row = row + counter, Column = col + counter});
+            WinningSet.Add(new Corrdinate { Row = row + counter, Column = col + counter });
             counter++;
         }
         if (counter == 4 && currentPlayer == checkPlayer)
