@@ -32,8 +32,16 @@ namespace connect4
                             continue;
                         }
                         var column = int.Parse(readLine);
-                        board = board.Move(board, column);
-                        PrintBoard(board);
+                        var result = board.Move(board, column);
+                        board = result.BoardState;
+                        if (result.IsValid)
+                        {
+                            PrintBoard(board);
+                        }
+                        else
+                        {
+                            throw new Exception(result.ErrorMessage);
+                        }
                     }
                     catch (Exception err)
                     {
