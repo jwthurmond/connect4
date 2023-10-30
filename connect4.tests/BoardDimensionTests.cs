@@ -34,7 +34,7 @@ namespace connect4.tests
             try { _ = testBoard.Move(testBoard, 1); }
             catch (Exception ex)
             {
-                Assert.Contains("Row is not valid", ex.Message);
+                Assert.Contains("Column is full", ex.Message);
             }
             
         }

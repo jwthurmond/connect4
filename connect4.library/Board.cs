@@ -57,6 +57,10 @@ public class GameBoard
         if (validation == null)
         {
             var row = GetMoveRow(board, columnMove);
+            if(row == 100)
+            {
+                throw new InvalidOperationException($"Invalid Move: Column is full");
+            }
             validation = IsValidMove(board, row, columnMove);
             if (validation == null)
             {
