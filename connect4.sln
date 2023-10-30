@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connect4", "connect4\connec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connect4.library", "connect4.library\connect4.library.csproj", "{F1D143E2-FF6D-4D75-8215-FE7A8B2F95C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connect4.tests", "connect4.tests\connect4.tests.csproj", "{8DEFBD4F-EC60-4D34-9293-DB21A92C9F94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connect4.tests", "connect4.tests\connect4.tests.csproj", "{8DEFBD4F-EC60-4D34-9293-DB21A92C9F94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00C4E6A6-22FB-441B-84A3-C0054D340880}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
