@@ -11,9 +11,9 @@ namespace connect4
             var player2WinCount=0;
             var drawCount=0;
             var keepPlaying = true;
+
             while (keepPlaying)
             {
-
                 PrintBoard(board);
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
                 {
