@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connect4.tournament", "connect4.tournament\connect4.tournament.csproj", "{D7514894-9A3E-457F-A973-13CAE6444BCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connect4.tournamentrunner", "connect4.tournamentrunner\connect4.tournamentrunner.csproj", "{679247D9-9666-49F8-8949-F82D180F7FFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +36,14 @@ Global
 		{8DEFBD4F-EC60-4D34-9293-DB21A92C9F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DEFBD4F-EC60-4D34-9293-DB21A92C9F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DEFBD4F-EC60-4D34-9293-DB21A92C9F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7514894-9A3E-457F-A973-13CAE6444BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7514894-9A3E-457F-A973-13CAE6444BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7514894-9A3E-457F-A973-13CAE6444BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7514894-9A3E-457F-A973-13CAE6444BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{679247D9-9666-49F8-8949-F82D180F7FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{679247D9-9666-49F8-8949-F82D180F7FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{679247D9-9666-49F8-8949-F82D180F7FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{679247D9-9666-49F8-8949-F82D180F7FFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
