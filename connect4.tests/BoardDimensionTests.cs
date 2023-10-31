@@ -38,5 +38,47 @@ namespace connect4.tests
             }
             
         }
+
+        [Fact]
+        public void TestTenByTwelveInvalidWidth()
+        {
+            var width = 10;
+            var height = 12;
+
+            GameBoard testBoard = new GameBoard(width: width, height: height);
+
+            var result = testBoard.Move(testBoard, 1);
+            Assert.True(result.IsValid);
+
+            result = testBoard.Move(testBoard, width);
+            Assert.True(result.IsValid);
+
+            result = testBoard.Move(testBoard, 0);
+            Assert.False(result.IsValid);
+            Assert.Contains("Column is not valid", result.ErrorMessage);
+
+            result = testBoard.Move(testBoard, width+1);
+            Assert.False(result.IsValid);
+            Assert.Contains("Column is not valid", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void TestTenByTwelveColumnUsedUp()
+        {
+            var width = 10;
+            var height = 12;
+
+            GameBoard testBoard = new GameBoard(width:width, height:height);
+
+            for (int i = 0; i < height; i++)
+            {
+                var moveResult = testBoard.Move(testBoard, 1);
+                Assert.True(moveResult.IsValid);
+            }
+
+            var result = testBoard.Move(testBoard, 1);
+            Assert.False(result.IsValid);
+            Assert.Contains("Column is full", result.ErrorMessage);
+        }
     }
 }

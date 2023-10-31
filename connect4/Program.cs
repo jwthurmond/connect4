@@ -96,16 +96,16 @@ namespace connect4
         {
             //write the current state of the board to the console
             Console.Write("   ");
-            for (int i = 1; i <= GameBoard.ColumnCountMax; i++)
+            for (int i = 1; i <= board.ColumnCountMax; i++)
             {
                 Console.Write($"{i} ");
             }
             Console.WriteLine();
 
-            for (int row = 0; row < GameBoard.RowCountMax; row++)
+            for (int row = 0; row < board.RowCountMax; row++)
             {
                 Console.Write($"{row + 1} |");
-                for (int col = 0; col < GameBoard.ColumnCountMax; col++)
+                for (int col = 0; col < board.ColumnCountMax; col++)
                 {
                     if (board.CurrentBoard[row, col] == 0)
                     {
