@@ -32,7 +32,7 @@ namespace connect4.tournamentrunner
             Players = Players.Where(p => p.Name != player.Name);
             return true;
         }
-        public void Run()
+        public void Run(bool showBoardAfterEachRound)
         {
             List<string> playersUsed = new List<string>();
             foreach (var function in Players)
@@ -60,7 +60,7 @@ namespace connect4.tournamentrunner
 
             foreach (var match in Matches)
             {
-                match.RunMatch();
+                match.RunMatch(showBoardAfterEachRound);
             }
         }
     }

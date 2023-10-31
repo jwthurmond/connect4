@@ -8,7 +8,7 @@
             tournament.AddPlayer(new tournamentrunner.RandomPlayer());
             tournament.AddPlayer(new tournamentrunner.IncrementBy1());
             tournament.AddPlayer(new tournamentrunner.Always4());
-            tournament.Run();
+            tournament.Run(true);
             
             
         }

@@ -18,7 +18,7 @@ namespace connect4.tournamentrunner
         public int PlayerBWinCount { get; private set; } = 0;
         public int DrawCount { get; private set; } = 0;
         
-        public void RunMatch()
+        public void RunMatch(bool showBoardAfterEachRound)
         {
             for(int i = 0; i < RoundsPerMatch; i++)
             {
@@ -62,6 +62,10 @@ namespace connect4.tournamentrunner
                 else
                 {
                     DrawCount++;
+                }
+                if (showBoardAfterEachRound)
+                {
+                    //show the board
                 }
                 Games.Add(board);
             }
