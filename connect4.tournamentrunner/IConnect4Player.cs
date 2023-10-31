@@ -5,14 +5,15 @@ namespace connect4.tournamentrunner
 {
     public interface IConnect4Player
     {
+        bool ShowBoardBeforeMove { get; }
         string Name { get; }
         int GetMove(GameBoard board);
     }
 
     public class RandomPlayer : IConnect4Player
     {
+        public bool ShowBoardBeforeMove => false;
         public string Name => "Random Player";
-
         public int GetMove(GameBoard board)
         {
             var random = new Random();
@@ -23,6 +24,7 @@ namespace connect4.tournamentrunner
 
     public class IncrementBy1:IConnect4Player
     {
+        public bool ShowBoardBeforeMove => false;
         public string Name => "Increment by 1";
         private int _lastMove = 0;
         public int GetMove(GameBoard board)
@@ -40,10 +42,24 @@ namespace connect4.tournamentrunner
 
     public class Always4:IConnect4Player
     {
+        public bool ShowBoardBeforeMove => false;
         public string Name => "Always 4";
         public int GetMove(GameBoard board)
         {
             return 4;
+        }
+    }
+
+    public class HumanInput:IConnect4Player
+    {
+        public bool ShowBoardBeforeMove => true;
+        public string Name => "Human Input";
+        public int GetMove(GameBoard board)
+        {             
+            Console.WriteLine("Enter a column number");
+            var input = Console.ReadLine();
+            var column = int.Parse(input);
+            return column;
         }
     }
 }
