@@ -8,30 +8,38 @@ public class GameBoard
         public int Row { get; set; }
         public int Column { get; set; }
     }
-    public GameBoard()
+
+    public GameBoard(int width = 7, int height = 6)
     {
-        //initialize the board
+        ColumnCountMax = width;
+        RowCountMax = height;
+        boardState = new int[RowCountMax, ColumnCountMax];
+        MaxMoves = RowCountMax * ColumnCountMax;
+        Initialize(this);
+    }
+
+    public void Initialize(GameBoard board)
+    {
         for (int i = 0; i < RowCountMax; i++)
         {
             for (int j = 0; j < ColumnCountMax; j++)
             {
-
-                boardState[i, j] = 0;
+                board.boardState[i, j] = 0;
             }
         }
     }
 
     public List<Corrdinate>? WinningSet { get; private set; }
     public Corrdinate? LastMove { get; private set; }
-    private readonly int[,] boardState = new int[RowCountMax, ColumnCountMax];
+    private int[,] boardState { get; init; }
 
     public int[,] CurrentBoard { get { return boardState; } }
-    public const int RowCountMax = 6;
-    public const int ColumnCountMax = 7;
+    public int RowCountMax { get; init; }
+    public int ColumnCountMax { get; init; }
     public const int InvalidMoveCountMax = 5;
     public int MoveCount { get; private set; } = 0;
     public int InvalidMoveCount { get; private set; } = 0;
-    public int MaxMoves { get; private set; } = RowCountMax * ColumnCountMax;
+    public int MaxMoves { get; init; }
     public int Player { get; private set; } = 1;
     public int Winner { get; private set; } = 0;
     public int GetPlayer()
@@ -147,7 +155,7 @@ public class GameBoard
     private static int GetMoveRow(GameBoard board, int columnMove)
     {
         //get the row of the move
-        for (int i = (GameBoard.RowCountMax - 1); i >= 0; i--)
+        for (int i = (board.RowCountMax - 1); i >= 0; i--)
         {
             if (board.boardState[i, columnMove] == 0)
             {
@@ -157,7 +165,7 @@ public class GameBoard
         return 100;
     }
 
-    private static string? IsValidColumn(int column)
+    private string? IsValidColumn(int column)
     {
         if (column < 0 || column + 1 > ColumnCountMax)
         {
@@ -168,12 +176,12 @@ public class GameBoard
 
     private static string? IsValidMove(GameBoard board, int row, int column)
     {
-        if (row < 0 || row + 1 > RowCountMax)
+        if (row < 0 || row + 1 > board.RowCountMax)
         {
             return "Row is not valid";
         }
 
-        if (column < 0 || column + 1 > ColumnCountMax)
+        if (column < 0 || column + 1 > board.ColumnCountMax)
         {
             return "Column is not valid";
         }
