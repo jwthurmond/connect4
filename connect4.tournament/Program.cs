@@ -4,13 +4,11 @@
     {
         static void Main(string[] args)
         {
-            var tournament = new tournamentrunner.Tournament(3);
+            var tournament = new tournamentrunner.Tournament(20);
             tournament.AddPlayer(new tournamentrunner.RandomPlayer());
             tournament.AddPlayer(new tournamentrunner.IncrementBy1());
             tournament.AddPlayer(new tournamentrunner.Always4());
             tournament.Run(true);
-            
-            
         }
     }
 }

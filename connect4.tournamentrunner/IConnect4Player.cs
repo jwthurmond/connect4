@@ -16,7 +16,7 @@ namespace connect4.tournamentrunner
         public int GetMove(GameBoard board)
         {
             var random = new Random();
-            var column = random.Next(0, board.ColumnCountMax);
+            var column = random.Next(1, board.ColumnCountMax);
             return column;
         }
     }
@@ -24,10 +24,15 @@ namespace connect4.tournamentrunner
     public class IncrementBy1:IConnect4Player
     {
         public string Name => "Increment by 1";
-        private int _lastMove = 1;
+        private int _lastMove = 0;
         public int GetMove(GameBoard board)
         {
-            return _lastMove++ % board.ColumnCountMax;
+            _lastMove++ ;
+            if(_lastMove> board.ColumnCountMax)
+            {
+                _lastMove = 1;
+            }
+            return _lastMove;
 
         }
 
