@@ -8,6 +8,7 @@
             tourny.AddPlayer(new tournament.RandomPlayer(), playerId:1);
             tourny.AddPlayer(new tournament.IncrementBy1(), playerId:2);
             tourny.AddPlayer(new tournament.Always4(), playerId:3);
+            tourny.AddPlayer(new tournament.Lowest(), playerId:4);
             tourny.Run();
             tourny.DisplayAllMatchDetails();
             tourny.DisplayResults();
