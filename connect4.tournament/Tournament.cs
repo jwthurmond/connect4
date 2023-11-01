@@ -52,7 +52,7 @@ namespace connect4.tournament
                         {
                             if (playerId != otherPlayerId)
                             {
-                                var match = new Match(RoundsPerMatch, Players[playerId], Players[otherPlayerId]);
+                                var match = new Match(RoundsPerMatch, playerId, Players[playerId], otherPlayerId, Players[otherPlayerId]);
                                 Matches = Matches.Append(match);
                             }
                         }
@@ -66,12 +66,46 @@ namespace connect4.tournament
                 match.RunMatch(showBoardAfterEachRound:debug);
             }
         }
+        public IEnumerable<TournamentResult> GetResults()
+        {
+            var tourneyResults = new List<TournamentResult>();
+            foreach (var playerId in Players.Keys)
+            {
+                var matchWins = 0;
+                var gameWins = 0;
+                foreach (var match in Matches)
+                {
+                    if (match.PlayerAId == playerId)
+                    {
+                        gameWins += match.PlayerAWinCount;
+                        if (match.PlayerAWinCount > match.PlayerBWinCount)
+                        {
+                            matchWins++;
+                        }
+                    }
+                    if (match.PlayerBId == playerId)
+                    {
+                        gameWins += match.PlayerBWinCount;
+                        if (match.PlayerBWinCount > match.PlayerAWinCount)
+                        {
+                            matchWins++;
+                        }
+                    }
+                }
+                tourneyResults.Add(new TournamentResult(playerId: playerId, matchWins: matchWins, gameWins: gameWins));
+            }
+            return tourneyResults.OrderByDescending(t => t.GameWins);
+        }
         public void DisplayResults()
         {
-
+            var results = GetResults();
+            var maxNameLen = Players.Values.Max(p => p.Name.Length);
             Console.WriteLine("Results:");
-            Console.WriteLine("ToDo: display list of players sorted by number of wins");
-
+            Console.WriteLine($"{"Player".PadRight(maxNameLen)} {"Game Wins"} {"Match Wins"}");
+            foreach (var result in results)
+            {
+                Console.WriteLine($"{Players[result.PlayerId].Name.PadRight(maxNameLen)} {result.GameWins.ToString().PadRight(9)} {result.MatchWins.ToString().PadRight(10)}");
+            }
         }
         public void DisplayAllMatchDetails()
         {
