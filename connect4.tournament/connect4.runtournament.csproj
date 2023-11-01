@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\connect4.library\connect4.library.csproj" />
-    <ProjectReference Include="..\connect4.tournamentrunner\connect4.tournamentrunner.csproj" />
+    <ProjectReference Include="..\connect4.tournamentrunner\connect4.tournament.csproj" />
   </ItemGroup>
 
 </Project>
