@@ -1,7 +1,7 @@
 ﻿using connect4.library;
 
 
-namespace connect4.tournamentrunner
+namespace connect4.tournament
 {
     public interface IConnect4Player
     {

@@ -1,6 +1,6 @@
 ﻿using connect4.library;
 
-namespace connect4.tournamentrunner
+namespace connect4.tournament
 {
     public class Match
     {

@@ -1,7 +1,7 @@
 ﻿using connect4.library;
 using System.Diagnostics;
 
-namespace connect4.tournamentrunner
+namespace connect4.tournament
 {
     public class Tournament
     {
