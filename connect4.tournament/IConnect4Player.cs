@@ -52,7 +52,7 @@ namespace connect4.tournament
 
     public class Lowest : IConnect4Player
     {
-        public bool ShowBoardBeforeMove => true;
+        public bool ShowBoardBeforeMove => false;
         public string Name => "Lowest";
         public int GetMove(GameBoard board)
         {
@@ -88,6 +88,43 @@ namespace connect4.tournament
                 }
             }
             return minCol;
+        }
+    }
+
+    public class Highest : IConnect4Player
+    {
+        public bool ShowBoardBeforeMove => false;
+        public string Name => "Highest";
+        public int GetMove(GameBoard board)
+        {
+            var maxCol = 0;
+            var maxColHeight = -1;
+            for (var col = 1; col <= board.ColumnCountMax; col++)
+            {
+                var colCoord = col - 1;
+                var currentHeight = 0;
+                for (var row = 0; row < board.RowCountMax; row++)
+                {
+                    var rowCoord = board.RowCountMax - (row + 1);
+                    var currentCellValue = board.CurrentBoard[rowCoord, colCoord];
+                    if (currentCellValue != 0)
+                    {
+                        currentHeight = row + 1;
+                        continue;
+                    }
+                    if (currentHeight > maxColHeight && board.IsMoveValid(col))
+                    {
+                        maxCol = col;
+                        maxColHeight = currentHeight;
+                        if (maxColHeight == board.RowCountMax - 2)
+                        {
+                            return maxCol;
+                        }
+                    }
+                    break;
+                }
+            }
+            return maxCol;
         }
     }
 
