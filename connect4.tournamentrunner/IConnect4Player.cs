@@ -13,7 +13,7 @@ namespace connect4.tournamentrunner
     public class RandomPlayer : IConnect4Player
     {
         public bool ShowBoardBeforeMove => false;
-        public string Name => "Random Player";
+        public string Name => "Random";
         public int GetMove(GameBoard board)
         {
             var random = new Random();

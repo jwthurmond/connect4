@@ -11,10 +11,15 @@ public class GameBoard
 
     public GameBoard(int width = 7, int height = 6)
     {
+        if (width < 4 || height < 4 || width > 9 || height > 9)
+        {
+            throw new ArgumentException("Minimum supported size is 4x4, maximum size is 9x9");
+        }
         ColumnCountMax = width;
         RowCountMax = height;
         boardState = new int[RowCountMax, ColumnCountMax];
         MaxMoves = RowCountMax * ColumnCountMax;
+        PrintWidth = (width * 2) + 3;
         Initialize(this);
     }
 
@@ -36,6 +41,7 @@ public class GameBoard
     public int[,] CurrentBoard { get { return boardState; } }
     public int RowCountMax { get; init; }
     public int ColumnCountMax { get; init; }
+    public int PrintWidth { get; init; }
     public const int InvalidMoveCountMax = 5;
     public int MoveCount { get; private set; } = 0;
     public int InvalidMoveCount { get; private set; } = 0;
@@ -307,6 +313,90 @@ public class GameBoard
         WinningSet = null;
 
         return 0;
+    }
+    public void PrintToConsole(ConsoleColor player1Color = ConsoleColor.Red,
+                               ConsoleColor player2Color = ConsoleColor.Yellow,
+                               ConsoleColor lastMoveBgColor = ConsoleColor.DarkGray)
+    {
+        for (int row = 0; row <= RowCountMax; row++)
+        {
+            PrintRowToConsole(row, player1Color, player2Color, lastMoveBgColor);
+            Console.WriteLine();
+        }
+    }
+
+    /// <summary>
+    /// This method prints a row from a game board to the console and returns
+    /// the number of characters printed. Row 0 is the header with column
+    /// numbers.
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="player1Color"></param>
+    /// <param name="player2Color"></param>
+    /// <param name="lastMoveBgColor"></param>
+    /// <returns></returns>
+    public int PrintRowToConsole(int row,
+                                  ConsoleColor player1Color = ConsoleColor.Red,
+                                  ConsoleColor player2Color = ConsoleColor.Yellow,
+                                  ConsoleColor lastMoveBgColor = ConsoleColor.DarkGray)
+    {
+        int charCount = 0;
+
+        if (row == 0)
+        {
+            var indent = "   ";
+            Console.Write(indent);
+            charCount += indent.Length;
+            for (int i = 1; i <= ColumnCountMax; i++)
+            {
+                var column = $"{i} ";
+                Console.Write(column);
+                charCount += column.Length;
+            }
+            if (charCount != PrintWidth)
+            {
+                throw new Exception("Board width incorrect");
+            }
+            return charCount;
+        }
+
+        int zeroBaseRow = row - 1;
+        Console.Write($"{row} |");
+        charCount += 3;
+        for (int col = 0; col < ColumnCountMax; col++)
+        {
+            if (CurrentBoard[zeroBaseRow, col] == 0)
+            {
+                Console.Write(" ");
+                charCount++;
+            }
+            else
+            {
+                if (WinningSet != null && WinningSet.Exists(c => c.Row == zeroBaseRow && c.Column == col)
+                    || (LastMove != null && LastMove.Row == zeroBaseRow && LastMove.Column == col))
+                {
+                    Console.BackgroundColor = lastMoveBgColor;
+                }
+                if (CurrentBoard[zeroBaseRow, col] == 1) // player 1
+                {
+                    Console.ForegroundColor = player1Color;
+                }
+                else // player 2
+                {
+                    Console.ForegroundColor = player2Color;
+                }
+                Console.Write("O");
+                charCount++;
+                Console.ResetColor();
+            }
+            Console.Write("|");
+            charCount++;
+        }
+        if (charCount != PrintWidth)
+        {
+            throw new Exception("Board width incorrect");
+        }
+        return charCount;
     }
 
 }

@@ -40,10 +40,10 @@ namespace connect4.tests
         }
 
         [Fact]
-        public void TestTenByTwelveInvalidWidth()
+        public void TestEightByNineInvalidWidth()
         {
-            var width = 10;
-            var height = 12;
+            var width = 8;
+            var height = 9;
 
             GameBoard testBoard = new GameBoard(width: width, height: height);
 
@@ -63,10 +63,10 @@ namespace connect4.tests
         }
 
         [Fact]
-        public void TestTenByTwelveColumnUsedUp()
+        public void TestEightByNineColumnUsedUp()
         {
-            var width = 10;
-            var height = 12;
+            var width = 8;
+            var height = 9;
 
             GameBoard testBoard = new GameBoard(width:width, height:height);
 
