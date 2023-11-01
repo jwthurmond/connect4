@@ -4,14 +4,18 @@ namespace connect4.tournament
 {
     public class Match
     {
-        public Match(int roundsPerMatch, IConnect4Player playerA, IConnect4Player playerB)
+        public Match(int roundsPerMatch, int playerAId, IConnect4Player playerA, int playerBId, IConnect4Player playerB)
         {
             RoundsPerMatch = roundsPerMatch;
+            PlayerAId = playerAId;
             PlayerA = playerA;
+            PlayerBId = playerBId;
             PlayerB = playerB;
         }
         public List<GameBoard> Games { get; private set; } = new List<GameBoard>();
+        public int PlayerAId { get; init; }
         public IConnect4Player PlayerA { get; private set; }
+        public int PlayerBId { get; init; }
         public IConnect4Player PlayerB { get; private set; }
         public int RoundsPerMatch { get; private set; } = 1;
         public int PlayerAWinCount { get; private set; } = 0;
