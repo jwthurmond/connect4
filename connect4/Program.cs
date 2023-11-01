@@ -14,7 +14,7 @@ namespace connect4
 
             while (keepPlaying)
             {
-                PrintBoard(board);
+                board.PrintToConsole();
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
                 {
                     try
@@ -41,7 +41,7 @@ namespace connect4
                         board = result.BoardState;
                         if (result.IsValid)
                         {
-                            PrintBoard(board);
+                            board.PrintToConsole();
                         }
                         else
                         {
@@ -90,53 +90,6 @@ namespace connect4
             Console.WriteLine($"Player 1 Wins: {player1WinCount}");
             Console.WriteLine($"Player 2 Wins: {player2WinCount}");
             Console.WriteLine($"Draws: {drawCount}");
-        }
-
-        private static void PrintBoard(GameBoard board)
-        {
-            //write the current state of the board to the console
-            Console.Write("   ");
-            for (int i = 1; i <= board.ColumnCountMax; i++)
-            {
-                Console.Write($"{i} ");
-            }
-            Console.WriteLine();
-
-            for (int row = 0; row < board.RowCountMax; row++)
-            {
-                Console.Write($"{row + 1} |");
-                for (int col = 0; col < board.ColumnCountMax; col++)
-                {
-                    if (board.CurrentBoard[row, col] == 0)
-                    {
-                        Console.Write(" ");
-                    }
-                    else
-                    {
-                        if (board.WinningSet != null && board.WinningSet.Exists(c => c.Row == row && c.Column == col))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        }
-                        else
-                        {
-                            if (board.CurrentBoard[row, col] == 1) // player 1
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                            }
-                            else // player 2
-                            {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                            }
-                            if (board.LastMove != null && board.LastMove.Row == row && board.LastMove.Column == col)
-                                Console.BackgroundColor = ConsoleColor.DarkGray;
-                        }
-                        Console.Write(0);
-                        Console.ResetColor();
-                    }
-                    Console.Write("|");
-                }
-                Console.WriteLine();
-            }
         }
     }
 }

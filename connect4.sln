@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connect4.tournament", "connect4.tournament\connect4.tournament.csproj", "{D7514894-9A3E-457F-A973-13CAE6444BCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connect4.runtournament", "connect4.runtournament\connect4.runtournament.csproj", "{D7514894-9A3E-457F-A973-13CAE6444BCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connect4.tournamentrunner", "connect4.tournamentrunner\connect4.tournamentrunner.csproj", "{679247D9-9666-49F8-8949-F82D180F7FFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connect4.tournament", "connect4.tournament\connect4.tournament.csproj", "{679247D9-9666-49F8-8949-F82D180F7FFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
