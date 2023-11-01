@@ -31,6 +31,8 @@ namespace connect4.tournament
                 GameBoard board = new GameBoard();
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
                 {
+                    PlayerA.StartNewGame();
+                    PlayerB.StartNewGame();
                     try
                     {
                         
