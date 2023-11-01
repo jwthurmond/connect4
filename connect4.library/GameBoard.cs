@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace connect4.library;
+﻿namespace connect4.library;
 public class GameBoard
 {
     public class Corrdinate
@@ -61,6 +59,26 @@ public class GameBoard
         }
     }
 
+    public bool IsMoveValid(int column)
+    {
+        var columnMove = column - 1;
+        var validation = IsValidColumn(columnMove);
+        if (validation == null)
+        {
+            var row = GetMoveRow(this, columnMove);
+            if (row != 100)
+            {
+                validation = IsValidMove(this, row, columnMove);
+                if (validation == null)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
     public MoveResult Move(GameBoard board, int column)
     {
         var moveResult = new MoveResult()
@@ -80,8 +98,8 @@ public class GameBoard
                 var dnf = CheckInvalidMoveCount(board);
                 if (dnf != 0)
                 {
-                    return ProcessError("Too many invalid moves game over");                    
-                }                
+                    return ProcessError("Too many invalid moves game over");
+                }
                 return ProcessError("Invalid Move: Column is full");
             }
             validation = IsValidMove(board, row, columnMove);
@@ -104,7 +122,7 @@ public class GameBoard
             }
         }
         else
-        {            
+        {
             return ProcessError($"Invalid Move: {validation}");
         }
         moveResult.BoardState = board;
