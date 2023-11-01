@@ -50,6 +50,47 @@ namespace connect4.tournament
         }
     }
 
+    public class Lowest : IConnect4Player
+    {
+        public bool ShowBoardBeforeMove => true;
+        public string Name => "Lowest";
+        public int GetMove(GameBoard board)
+        {
+            var minCol = 0;
+            var minColHeight = 100;
+            for (var col = 1; col <= board.ColumnCountMax; col++)
+            {
+                var colCoord = col - 1;
+                var currentHeight = 0;
+                for (var row = 0; row < board.RowCountMax; row++)
+                {
+                    var rowCoord = board.RowCountMax - (row+1);
+                    var currentCellValue = board.CurrentBoard[rowCoord, colCoord];
+                    if (currentHeight >= minColHeight)
+                    {
+                        break;
+                    }
+                    if (currentCellValue != 0)
+                    {
+                        currentHeight = row+1;
+                        continue;
+                    }
+                    if (currentHeight < minColHeight && board.IsMoveValid(col))
+                    {
+                        minCol = col;
+                        minColHeight = currentHeight;
+                        if (minColHeight == 0)
+                        {
+                            return minCol;
+                        }
+                    }
+                    break;
+                }
+            }
+            return minCol;
+        }
+    }
+
     public class HumanInput:IConnect4Player
     {
         public bool ShowBoardBeforeMove => true;
