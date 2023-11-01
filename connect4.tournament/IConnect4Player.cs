@@ -8,6 +8,7 @@ namespace connect4.tournament
         bool ShowBoardBeforeMove { get; }
         string Name { get; }
         int GetMove(GameBoard board);
+        void StartNewGame();
     }
 
     public class RandomPlayer : IConnect4Player
@@ -20,17 +21,19 @@ namespace connect4.tournament
             var column = random.Next(1, board.ColumnCountMax);
             return column;
         }
+        public void StartNewGame() { }
     }
 
-    public class IncrementBy1:IConnect4Player
+    public class IncrementBy1 : IConnect4Player
     {
+        public void StartNewGame() { _lastMove = 0; }
         public bool ShowBoardBeforeMove => false;
         public string Name => "Increment by 1";
         private int _lastMove = 0;
         public int GetMove(GameBoard board)
         {
-            _lastMove++ ;
-            if(_lastMove> board.ColumnCountMax)
+            _lastMove++;
+            if (_lastMove > board.ColumnCountMax)
             {
                 _lastMove = 1;
             }
@@ -40,8 +43,9 @@ namespace connect4.tournament
 
     }
 
-    public class Always4:IConnect4Player
+    public class Always4 : IConnect4Player
     {
+        public void StartNewGame() { }
         public bool ShowBoardBeforeMove => false;
         public string Name => "Always 4";
         public int GetMove(GameBoard board)
@@ -52,6 +56,7 @@ namespace connect4.tournament
 
     public class Lowest : IConnect4Player
     {
+        public void StartNewGame() { }
         public bool ShowBoardBeforeMove => true;
         public string Name => "Lowest";
         public int GetMove(GameBoard board)
@@ -64,7 +69,7 @@ namespace connect4.tournament
                 var currentHeight = 0;
                 for (var row = 0; row < board.RowCountMax; row++)
                 {
-                    var rowCoord = board.RowCountMax - (row+1);
+                    var rowCoord = board.RowCountMax - (row + 1);
                     var currentCellValue = board.CurrentBoard[rowCoord, colCoord];
                     if (currentHeight >= minColHeight)
                     {
@@ -72,7 +77,7 @@ namespace connect4.tournament
                     }
                     if (currentCellValue != 0)
                     {
-                        currentHeight = row+1;
+                        currentHeight = row + 1;
                         continue;
                     }
                     if (currentHeight < minColHeight && board.IsMoveValid(col))
@@ -91,12 +96,13 @@ namespace connect4.tournament
         }
     }
 
-    public class HumanInput:IConnect4Player
+    public class HumanInput : IConnect4Player
     {
+        public void StartNewGame() { }
         public bool ShowBoardBeforeMove => true;
         public string Name => "Human Input";
         public int GetMove(GameBoard board)
-        {             
+        {
             Console.WriteLine("Enter a column number");
             var input = Console.ReadLine();
             var column = int.Parse(input);
