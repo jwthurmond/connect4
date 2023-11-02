@@ -1,4 +1,5 @@
 ﻿using connect4.library;
+using connect4.tournament;
 
 namespace connect4
 {
@@ -7,43 +8,48 @@ namespace connect4
         static void Main()
         {
             var board = new GameBoard();
+            var player1 = new HumanInput();
             var player1WinCount = 0;
+            var player2 = new RandomPlayer();
             var player2WinCount = 0;
             var drawCount = 0;
             var keepPlaying = true;
 
+            if (player1.Color == player2.Color)
+            {
+                player1.Color = ConsoleColor.Red;
+                player2.Color = ConsoleColor.Yellow;
+            }
+
             while (keepPlaying)
             {
-                board.PrintToConsole();
+                Console.ForegroundColor = player1.Color;
+                Console.Write($"{player1.Name}");
+                Console.ResetColor();
+                Console.Write(" vs ");
+                Console.ForegroundColor = player2.Color;
+                Console.Write($"{player2.Name}");
+                Console.ResetColor();
+
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
                 {
                     try
                     {
-                        if (board.GetPlayer() == 1)
+                        IConnect4Player currentPlayer = player1;
+                        if (board.GetPlayer() != 1)
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            currentPlayer = player2;
                         }
 
-                        Console.Write($"Player {board.GetPlayer()}");
-                        Console.ResetColor();
-                        Console.Write(" Enter the Column:");
-                        var readLine = Console.ReadLine();
-                        if (readLine == null)
+                        if (currentPlayer.ShowBoardBeforeMove)
                         {
-                            continue;
+                            board.PrintToConsole(player1Color: player1.Color, player2Color: player2.Color);
                         }
-                        var column = int.Parse(readLine);
+
+                        var column = currentPlayer.GetMove(board);
                         var result = board.Move(board, column);
                         board = result.BoardState;
-                        if (result.IsValid)
-                        {
-                            board.PrintToConsole();
-                        }
-                        else
+                        if (!result.IsValid)
                         {
                             throw new Exception(result.ErrorMessage);
                         }
@@ -63,6 +69,7 @@ namespace connect4
                     {
                         player2WinCount++;
                     }
+                    board.PrintToConsole(player1Color: player1.Color, player2Color: player2.Color);
                     Console.WriteLine($"Player {board.Winner} Wins!");
                 }
                 else

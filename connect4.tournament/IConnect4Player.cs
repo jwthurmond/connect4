@@ -1,5 +1,5 @@
 ﻿using connect4.library;
-
+using System.Drawing;
 
 namespace connect4.tournament
 {
@@ -7,6 +7,7 @@ namespace connect4.tournament
     {
         bool ShowBoardBeforeMove { get; }
         string Name { get; }
+        ConsoleColor Color { get; set; }
         int GetMove(GameBoard board);
         void StartNewGame();
     }
@@ -15,6 +16,7 @@ namespace connect4.tournament
     {
         public bool ShowBoardBeforeMove => false;
         public string Name => "Random";
+        public ConsoleColor Color { get; set; } = ConsoleColor.Red;
         public int GetMove(GameBoard board)
         {
             var random = new Random();
@@ -29,6 +31,7 @@ namespace connect4.tournament
         public void StartNewGame() { _lastMove = 0; }
         public bool ShowBoardBeforeMove => false;
         public string Name => "Increment by 1";
+        public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
         private int _lastMove = 0;
         public int GetMove(GameBoard board)
         {
@@ -48,6 +51,7 @@ namespace connect4.tournament
         public void StartNewGame() { }
         public bool ShowBoardBeforeMove => false;
         public string Name => "Always 4";
+        public ConsoleColor Color { get; set; } = ConsoleColor.Magenta;
         public int GetMove(GameBoard board)
         {
             return 4;
@@ -59,6 +63,7 @@ namespace connect4.tournament
         public void StartNewGame() { }
         public bool ShowBoardBeforeMove => true;
         public string Name => "Lowest";
+        public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
         public int GetMove(GameBoard board)
         {
             var minCol = 0;
@@ -101,9 +106,13 @@ namespace connect4.tournament
         public void StartNewGame() { }
         public bool ShowBoardBeforeMove => true;
         public string Name => "Human Input";
+        public ConsoleColor Color { get; set; } = ConsoleColor.Green;
         public int GetMove(GameBoard board)
         {
-            Console.WriteLine("Enter a column number");
+            Console.ForegroundColor = Color;
+            Console.Write($"Player {board.GetPlayer()}");
+            Console.ResetColor();
+            Console.Write(" Enter the Column:");
             var input = Console.ReadLine();
             var column = int.Parse(input);
             return column;
