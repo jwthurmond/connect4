@@ -29,10 +29,10 @@ namespace connect4.tournament
             {
                 var currentPlayerName = "";
                 GameBoard board = new GameBoard();
+                PlayerA.StartNewGame();
+                PlayerB.StartNewGame();
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
                 {
-                    PlayerA.StartNewGame();
-                    PlayerB.StartNewGame();
                     try
                     {
                         
