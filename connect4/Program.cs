@@ -10,7 +10,7 @@ namespace connect4
             var board = new GameBoard();
             var player1 = new HumanInput();
             var player1WinCount = 0;
-            var player2 = new RandomPlayer();
+            var player2 = new IncrementBy1();
             var player2WinCount = 0;
             var drawCount = 0;
             var keepPlaying = true;
@@ -23,12 +23,14 @@ namespace connect4
 
             while (keepPlaying)
             {
+                player1.StartNewGame();
+                player2.StartNewGame();
                 Console.ForegroundColor = player1.Color;
                 Console.Write($"{player1.Name}");
                 Console.ResetColor();
                 Console.Write(" vs ");
                 Console.ForegroundColor = player2.Color;
-                Console.Write($"{player2.Name}");
+                Console.WriteLine($"{player2.Name}");
                 Console.ResetColor();
 
                 while (board.Winner == 0 && board.MoveCount < board.MaxMoves)
@@ -86,8 +88,8 @@ namespace connect4
                 }
                 else
                 {
+                    Console.WriteLine();
                     board = new GameBoard();
-                    Console.Clear();
                 }
             }
         }
