@@ -106,6 +106,7 @@ namespace connect4.tournament
         public void StartNewGame() { }
         public bool ShowBoardBeforeMove => false;
         public string Name => "Highest";
+        public ConsoleColor Color { get; set; } = ConsoleColor.DarkGreen;
         public int GetMove(GameBoard board)
         {
             var maxCol = 0;
