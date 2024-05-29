@@ -1,5 +1,6 @@
 ﻿using connect4.library;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace connect4.tournament
 {
@@ -11,7 +12,7 @@ namespace connect4.tournament
             this.debug = debug;
         }
         public bool debug = false;
-        public Dictionary<int,IConnect4Player> Players { get; private set; } = new Dictionary<int, IConnect4Player>();
+        public Dictionary<int, IConnect4Player> Players { get; private set; } = new Dictionary<int, IConnect4Player>();
 
         public int RoundsPerMatch { get; private set; } = 1;
         public IEnumerable<Match> Matches { get; private set; } = new List<Match>();
@@ -59,11 +60,13 @@ namespace connect4.tournament
                     }
                     playersUsed.Add(playerId);
                 }
+                var playSelf = new Match(RoundsPerMatch, playerId, Players[playerId], playerId, Players[playerId]);
+                Matches = Matches.Append(playSelf);
             }
 
             foreach (var match in Matches)
             {
-                match.RunMatch(showBoardAfterEachRound:debug);
+                match.RunMatch(showBoardAfterEachRound: debug);
             }
         }
         public IEnumerable<TournamentResult> GetResults()
@@ -109,7 +112,7 @@ namespace connect4.tournament
         }
         public void DisplayAllMatchDetails()
         {
-            foreach(var match in Matches)
+            foreach (var match in Matches)
             {
                 DisplayMatchDetails(match);
                 Console.WriteLine();
@@ -117,27 +120,30 @@ namespace connect4.tournament
         }
         public void DisplayMatchDetails(Match match)
         {
-            if (match.PlayerA.Color == match.PlayerB.Color)
+            var playerAColor = match.PlayerA.Color;
+            var playerBColor = match.PlayerB.Color;
+            if (match.PlayerA.Color == match.PlayerB.Color || match.PlayerA.Name == match.PlayerB.Name)
             {
-                match.PlayerA.Color = ConsoleColor.Red;
-                match.PlayerB.Color = ConsoleColor.Yellow;
+                playerAColor = match.PlayerA.Color;
+                playerBColor = match.PlayerB.AlternateColor;
             }
+            
 
             //Print player names
             var playerAWins = $"[{match.PlayerAWinCount} wins]";
-            Console.ForegroundColor = match.PlayerA.Color;
+            Console.ForegroundColor = playerAColor;
             Console.Write($"{match.PlayerA.Name.PadRight(playerAWins.Length)}");
             Console.ResetColor();
             Console.Write(" vs ");
-            Console.ForegroundColor = match.PlayerB.Color;
+            Console.ForegroundColor = playerBColor;
             Console.Write($"{match.PlayerB.Name}\n");
             Console.ResetColor();
 
-            Console.ForegroundColor = match.PlayerA.Color;
+            Console.ForegroundColor = playerAColor;
             Console.Write(playerAWins.PadRight(match.PlayerA.Name.Length));
             Console.ResetColor();
             Console.Write("    ");
-            Console.ForegroundColor = match.PlayerB.Color;
+            Console.ForegroundColor = playerBColor;
             Console.Write($"[{match.PlayerBWinCount} wins]");
             Console.ResetColor();
             if (match.DrawCount > 0)
@@ -148,17 +154,17 @@ namespace connect4.tournament
 
             //How many rounds can we fit on one line?
             var roundsPerLine = Console.WindowWidth / (match.Games.First().PrintWidth + 2);
-            var blocks = (int) Math.Ceiling( (decimal)match.RoundsPerMatch / (decimal)roundsPerLine);
-            for (int block = 0; block < blocks; block++) 
+            var blocks = (int)Math.Ceiling((decimal)match.RoundsPerMatch / (decimal)roundsPerLine);
+            for (int block = 0; block < blocks; block++)
             {
                 for (int row = 0; row <= match.Games.First().RowCountMax; row++)
                 {
-                    for (int i = 0; i < roundsPerLine; i++) 
+                    for (int i = 0; i < roundsPerLine; i++)
                     {
                         var game = (block * roundsPerLine) + i;
                         if (game < match.Games.Count)
                         {
-                            match.Games[game].PrintRowToConsole(row, player1Color:match.PlayerA.Color, player2Color: match.PlayerB.Color);
+                            match.Games[game].PrintRowToConsole(row, player1Color: playerAColor, player2Color: playerBColor);
                             Console.Write("  ");
                         }
                     }

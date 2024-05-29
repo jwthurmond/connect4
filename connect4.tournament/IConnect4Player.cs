@@ -8,6 +8,7 @@ namespace connect4.tournament
         bool ShowBoardBeforeMove { get; }
         string Name { get; }
         ConsoleColor Color { get; set; }
+        ConsoleColor AlternateColor { get; set; }
         int GetMove(GameBoard board);
         void StartNewGame();
     }
@@ -17,6 +18,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => false;
         public string Name => "Random";
         public ConsoleColor Color { get; set; } = ConsoleColor.Red;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
         public int GetMove(GameBoard board)
         {
             var random = new Random();
@@ -32,6 +34,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => false;
         public string Name => "Increment by 1";
         public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Blue;
         private int _lastMove = 0;
         public int GetMove(GameBoard board)
         {
@@ -52,6 +55,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => false;
         public string Name => "Always 4";
         public ConsoleColor Color { get; set; } = ConsoleColor.Magenta;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
         public int GetMove(GameBoard board)
         {
             return 4;
@@ -64,6 +68,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => false;
         public string Name => "Lowest";
         public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
         public int GetMove(GameBoard board)
         {
             var minCol = 0;
@@ -107,6 +112,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => false;
         public string Name => "Highest";
         public ConsoleColor Color { get; set; } = ConsoleColor.DarkGreen;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Red;
         public int GetMove(GameBoard board)
         {
             var maxCol = 0;
@@ -146,6 +152,7 @@ namespace connect4.tournament
         public bool ShowBoardBeforeMove => true;
         public string Name => "Human Input";
         public ConsoleColor Color { get; set; } = ConsoleColor.Green;
+        public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Red;
         public int GetMove(GameBoard board)
         {
             Console.ForegroundColor = Color;
