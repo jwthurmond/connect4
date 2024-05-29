@@ -122,10 +122,18 @@ namespace connect4.tournament
         {
             var playerAColor = match.PlayerA.Color;
             var playerBColor = match.PlayerB.Color;
-            if (match.PlayerA.Color == match.PlayerB.Color || match.PlayerA.Name == match.PlayerB.Name)
+            if (match.PlayerA.Color == match.PlayerB.Color)
             {
-                playerAColor = match.PlayerA.Color;
-                playerBColor = match.PlayerB.AlternateColor;
+                if (match.PlayerA.Color != match.PlayerB.AlternateColor)
+                {
+                    playerAColor = match.PlayerA.Color;
+                    playerBColor = match.PlayerB.AlternateColor;
+                }
+                else
+                {
+                    playerAColor = ConsoleColor.Red;
+                    playerBColor = ConsoleColor.Yellow;
+                }
             }
             
 
