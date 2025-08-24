@@ -5,17 +5,23 @@ namespace connect4.tournament;
 public interface IConnect4Player
 {
     bool ShowBoardBeforeMove { get; }
-    string Name { get; }
+    public string Name { get; set; }
     ConsoleColor Color { get; set; }
     ConsoleColor AlternateColor { get; set; }
     int GetMove(GameBoard board);
     void StartNewGame();
+    bool AcceptsCustomName { get; }
 }
 
 public class RandomPlayer : IConnect4Player
 {
     public bool ShowBoardBeforeMove => false;
-    public string Name => "Random";
+    public string Name
+    {
+        get { return "Random"; }
+        set { }
+    }
+
     public ConsoleColor Color { get; set; } = ConsoleColor.Red;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
     public int GetMove(GameBoard board)
@@ -25,13 +31,18 @@ public class RandomPlayer : IConnect4Player
         return column;
     }
     public void StartNewGame() { }
+    public bool AcceptsCustomName => false;
 }
 
 public class IncrementBy1 : IConnect4Player
 {
     public void StartNewGame() { _lastMove = 0; }
     public bool ShowBoardBeforeMove => false;
-    public string Name => "Increment by 1";
+    public string Name
+    {
+        get { return "Increment by 1"; }
+        set { }
+    }
     public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Blue;
     private int _lastMove = 0;
@@ -45,6 +56,7 @@ public class IncrementBy1 : IConnect4Player
         return _lastMove;
 
     }
+    public bool AcceptsCustomName => false;
 
 }
 
@@ -52,20 +64,29 @@ public class Always4 : IConnect4Player
 {
     public void StartNewGame() { }
     public bool ShowBoardBeforeMove => false;
-    public string Name => "Always 4";
+    public string Name
+    {
+        get { return "Always 4"; }
+        set { }
+    }
     public ConsoleColor Color { get; set; } = ConsoleColor.Magenta;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
     public int GetMove(GameBoard board)
     {
         return 4;
     }
+    public bool AcceptsCustomName => false;
 }
 
 public class Lowest : IConnect4Player
 {
     public void StartNewGame() { }
     public bool ShowBoardBeforeMove => false;
-    public string Name => "Lowest";
+    public string Name
+    {
+        get { return "Lowest"; }
+        set { }
+    }
     public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Green;
     public int GetMove(GameBoard board)
@@ -103,13 +124,18 @@ public class Lowest : IConnect4Player
         }
         return minCol;
     }
+    public bool AcceptsCustomName => false;
 }
 
 public class Highest : IConnect4Player
 {
     public void StartNewGame() { }
     public bool ShowBoardBeforeMove => false;
-    public string Name => "Highest";
+    public string Name
+    {
+        get { return "Highest"; }
+        set { }
+    }
     public ConsoleColor Color { get; set; } = ConsoleColor.DarkGreen;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Red;
     public int GetMove(GameBoard board)
@@ -143,13 +169,14 @@ public class Highest : IConnect4Player
         }
         return maxCol;
     }
+    public bool AcceptsCustomName => false;
 }
 
 public class HumanInput : IConnect4Player
 {
     public void StartNewGame() { }
     public bool ShowBoardBeforeMove => true;
-    public string Name => "Human Input";
+    public string Name { get; set; } = "Human";
     public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Red;
     public int GetMove(GameBoard board)
@@ -162,4 +189,5 @@ public class HumanInput : IConnect4Player
         var column = int.Parse(input);
         return column;
     }
+    public bool AcceptsCustomName => true;
 }

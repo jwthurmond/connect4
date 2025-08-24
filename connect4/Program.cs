@@ -7,10 +7,31 @@ internal class Program
 {
     static void Main()
     {
+    
         var board = new GameBoard();
-        var player1 = new HumanInput();
+        var player1 = PickPlayer(
+                new IConnect4Player[]
+                {
+                    new HumanInput(),
+                    new RandomPlayer(),
+                    new IncrementBy1(),
+                    new Always4(),
+                    new Lowest(),
+                    new Highest(),
+                }
+            , "Select Player 1:");
         var player1WinCount = 0;
-        var player2 = new IncrementBy1();
+        var player2 = PickPlayer(
+            new IConnect4Player[]
+            {
+                new HumanInput(),
+                new RandomPlayer(),
+                new IncrementBy1(),
+                new Always4(),
+                new Lowest(),
+                new Highest(),
+            }
+            , "Select Player 2:");
         var player2WinCount = 0;
         var drawCount = 0;
         var keepPlaying = true;
@@ -91,6 +112,36 @@ internal class Program
                 Console.WriteLine();
                 board = new GameBoard();
             }
+        }
+    }
+    
+    private static IConnect4Player PickPlayer(IConnect4Player[] playerClasses, string prompt = "Select a player:")
+    {
+        while(true)
+        {
+            Console.WriteLine(prompt);
+            for (var i = 0; i < playerClasses.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {playerClasses[i].Name}");
+            }
+            Console.Write("Enter the number of the player: ");
+            var input = Console.ReadLine();
+            IConnect4Player playerClass;
+            if (int.TryParse(input, out var selectedIndex) && selectedIndex > 0 && selectedIndex <= playerClasses.Length)
+            {
+                playerClass =  playerClasses[selectedIndex - 1];
+                if (playerClass.AcceptsCustomName)
+                {
+                    Console.Write("Enter your name: ");
+                    var name = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(input))
+                    {
+                         playerClass.Name = name ?? "No input";
+                    }
+                }
+
+                return playerClass;
+            } 
         }
     }
 
