@@ -182,7 +182,7 @@ public class HumanInput : IConnect4Player
     public int GetMove(GameBoard board)
     {
         Console.ForegroundColor = Color;
-        Console.Write($"Player {board.GetPlayer()}");
+        Console.Write($"Player {board.GetPlayer()} ({Name})");
         Console.ResetColor();
         Console.Write(" Enter the Column:");
         var input = Console.ReadLine();

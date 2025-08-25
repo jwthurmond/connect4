@@ -9,29 +9,9 @@ internal class Program
     {
     
         var board = new GameBoard();
-        var player1 = PickPlayer(
-                new IConnect4Player[]
-                {
-                    new HumanInput(),
-                    new RandomPlayer(),
-                    new IncrementBy1(),
-                    new Always4(),
-                    new Lowest(),
-                    new Highest(),
-                }
-            , "Select Player 1:");
+        var player1 = PickPlayer("Select Player 1:");
         var player1WinCount = 0;
-        var player2 = PickPlayer(
-            new IConnect4Player[]
-            {
-                new HumanInput(),
-                new RandomPlayer(),
-                new IncrementBy1(),
-                new Always4(),
-                new Lowest(),
-                new Highest(),
-            }
-            , "Select Player 2:");
+        var player2 = PickPlayer("Select Player 2:");
         var player2WinCount = 0;
         var drawCount = 0;
         var keepPlaying = true;
@@ -115,8 +95,17 @@ internal class Program
         }
     }
     
-    private static IConnect4Player PickPlayer(IConnect4Player[] playerClasses, string prompt = "Select a player:")
+    private static IConnect4Player PickPlayer(string prompt = "Select a player:")
     {
+        var playerClasses = new IConnect4Player[]
+        {
+            new HumanInput(),
+            new RandomPlayer(),
+            new IncrementBy1(),
+            new Always4(),
+            new Lowest(),
+            new Highest()
+        };
         while(true)
         {
             Console.WriteLine(prompt);
