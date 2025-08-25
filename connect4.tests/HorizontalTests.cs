@@ -1,5 +1,4 @@
 ﻿using connect4.library;
-using FluentAssertions;
 using Xunit;
 
 namespace connect4.tests;
@@ -20,7 +19,7 @@ public class HorizontalTest
         _ = testBoard.Move(testBoard, 6); //player 1
         _ = testBoard.Move(testBoard, 6); //player 2
         var boardResult = testBoard.Move(testBoard, 7); //player 1
-        boardResult.BoardState.Winner.Should().Be(expected);
+        Assert.Equal(boardResult.BoardState.Winner, expected);
     }
 
     [Fact]
@@ -37,7 +36,7 @@ public class HorizontalTest
         _ = testBoard.Move(testBoard, 3); //player 1
         _ = testBoard.Move(testBoard, 3); //player 2
         var boardResult = testBoard.Move(testBoard, 4); //player 1
-        boardResult.BoardState.Winner.Should().Be(expected);
+        Assert.Equal(boardResult.BoardState.Winner, expected);
     }
 
 
@@ -58,7 +57,7 @@ public class HorizontalTest
         _ = testBoard.Move(testBoard, 7); //player 2
         _ = testBoard.Move(testBoard, 1); //player 1
         var boardResult = testBoard.Move(testBoard, 7); //player 2
-        boardResult.BoardState.Winner.Should().Be(expected);
+        Assert.Equal(boardResult.BoardState.Winner, expected);
     }
 
 }

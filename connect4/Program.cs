@@ -80,7 +80,7 @@ internal class Program
                 drawCount++;
                 Console.WriteLine($"No one wins )-:");
             }
-            PrintStats(player1WinCount, player2WinCount, drawCount);
+            PrintStats(player1WinCount, player2WinCount, drawCount, player1.Name, player2.Name);
             Console.Write($"Type 'Q' or 'q' to quit:");
             var keepPlayingGame = Console.ReadLine();
             if (keepPlayingGame != null && keepPlayingGame.ToLower() == "q")
@@ -133,10 +133,10 @@ internal class Program
         }
     }
 
-    private static void PrintStats(int player1WinCount, int player2WinCount, int drawCount)
+    private static void PrintStats(int player1WinCount, int player2WinCount, int drawCount, string player1Name = "Player 1", string player2Name = "Player 2")
     {
-        Console.WriteLine($"Player 1 Wins: {player1WinCount}");
-        Console.WriteLine($"Player 2 Wins: {player2WinCount}");
+        Console.WriteLine($"{player1Name} Wins: {player1WinCount}");
+        Console.WriteLine($"{player2Name} Wins: {player2WinCount}");
         Console.WriteLine($"Draws: {drawCount}");
     }
 }
