@@ -45,7 +45,7 @@ public class IncrementBy1 : IConnect4Player
     }
     public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
     public ConsoleColor AlternateColor { get; set; } = ConsoleColor.Blue;
-    private int _lastMove = 0;
+    private int _lastMove;
     public int GetMove(GameBoard board)
     {
         _lastMove++;
@@ -186,8 +186,13 @@ public class HumanInput : IConnect4Player
         Console.ResetColor();
         Console.Write(" Enter the Column:");
         var input = Console.ReadLine();
-        var column = int.Parse(input);
-        return column;
+
+        if (input != null)
+        {
+            var column = int.Parse(input);
+            return column;
+        }
+        throw new Exception("Invalid input");
     }
     public bool AcceptsCustomName => true;
 }

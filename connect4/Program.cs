@@ -115,10 +115,9 @@ internal class Program
             }
             Console.Write("Enter the number of the player: ");
             var input = Console.ReadLine();
-            IConnect4Player playerClass;
             if (int.TryParse(input, out var selectedIndex) && selectedIndex > 0 && selectedIndex <= playerClasses.Length)
             {
-                playerClass =  playerClasses[selectedIndex - 1];
+                var playerClass = playerClasses[selectedIndex - 1];
                 if (playerClass.AcceptsCustomName)
                 {
                     Console.Write("Enter your name: ");
