@@ -1,0 +1,27 @@
+name: .NET Core PR and Merge Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore Dependancies
+      run: dotnet restore ./connect4.sln
+    - name: Restore Dependancies
+      run: dotnet build ./connect4.sln
+    - name: Restore Dependancies
+      run: dotnet test ./connect4.sln
