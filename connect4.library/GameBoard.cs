@@ -66,9 +66,9 @@ public class GameBoard
         if (validation == null)
         {
             var row = GetMoveRow(this, columnMove);
-            if (row != 100)
+            if (row != null)
             {
-                validation = IsValidMove(this, row, columnMove);
+                validation = IsValidMove(this, row.Value, columnMove);
                 if (validation == null)
                 {
                     return true;
@@ -92,7 +92,7 @@ public class GameBoard
         if (validation == null)
         {
             var row = GetMoveRow(board, columnMove);
-            if (row == 100)
+            if (row == null)
             {
                 InvalidMoveCount++;
                 var dnf = CheckInvalidMoveCount(board);
@@ -102,12 +102,12 @@ public class GameBoard
                 }
                 return ProcessError("Invalid Move: Column is full");
             }
-            validation = IsValidMove(board, row, columnMove);
+            validation = IsValidMove(board, row.Value, columnMove);
             if (validation == null)
             {
                 InvalidMoveCount = 0;
-                board = MakeMove(board, row, columnMove);
-                LastMove = new Corrdinate { Row = row, Column = columnMove };
+                board = MakeMove(board, row.Value, columnMove);
+                LastMove = new Corrdinate { Row = row.Value, Column = columnMove };
                 board.Winner = CheckWinner(board);
             }
             else
@@ -176,7 +176,7 @@ public class GameBoard
         board.boardState[row, column] = board.Player;
         return board;
     }
-    private static int GetMoveRow(GameBoard board, int columnMove)
+    private static int? GetMoveRow(GameBoard board, int columnMove)
     {
         //get the row of the move
         for (int i = (board.RowCountMax - 1); i >= 0; i--)
@@ -186,8 +186,7 @@ public class GameBoard
                 return i;
             }
         }
-        //TODO: update to return a different valie for invalid move
-        return 100;
+        return null;
     }
 
     private string? IsValidColumn(int column)
