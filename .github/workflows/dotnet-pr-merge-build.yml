@@ -21,7 +21,7 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore Dependancies
       run: dotnet restore ./connect4.sln
-    - name: Restore Dependancies
+    - name: Build Solution
       run: dotnet build ./connect4.sln
-    - name: Restore Dependancies
+    - name: Run Tests
       run: dotnet test ./connect4.sln
