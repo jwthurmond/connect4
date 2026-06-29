@@ -43,7 +43,6 @@ connect4.exampleplayer    ← depends on tournament (compile-time only); ships a
 
 ## Known issues
 
-- `Tournament.DisplayMatchDetails` divides by `Console.WindowWidth`, which is 0 in non-interactive terminals (e.g. CI, redirected output), causing a `DivideByZeroException`. This is a pre-existing bug.
 - The diagonal win check (`CheckDiagonalWin`) is marked TODO and does not correctly detect all diagonal wins.
 
 ## Writing a player plugin

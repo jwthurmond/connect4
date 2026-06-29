@@ -157,7 +157,8 @@ public class Tournament
         Console.Write('\n');
 
         //How many rounds can we fit on one line?
-        var roundsPerLine = Console.WindowWidth / (match.Games.First().PrintWidth + 2);
+        var windowWidth = Console.WindowWidth > 0 ? Console.WindowWidth : match.Games.First().PrintWidth + 2;
+        var roundsPerLine = windowWidth / (match.Games.First().PrintWidth + 2);
         var blocks = (int)Math.Ceiling((decimal)match.RoundsPerMatch / (decimal)roundsPerLine);
         for (int block = 0; block < blocks; block++)
         {
