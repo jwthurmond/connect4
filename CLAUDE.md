@@ -41,9 +41,6 @@ connect4.exampleplayer    ← depends on tournament (compile-time only); ships a
 
 **`connect4.runtournament`** — `PlayerLoader` uses `AssemblyLoadContext` to dynamically load player DLLs from a plugins directory at startup. The critical behaviour: host-loaded assemblies (`connect4.tournament`, `connect4.library`) are resolved back to the host so type identity is shared — plugins must NOT copy these DLLs into their output (use `ExcludeAssets="runtime"` and `CopyLocalLockFileAssemblies=false`).
 
-## Known issues
-
-- The diagonal win check (`CheckDiagonalWin`) is marked TODO and does not correctly detect all diagonal wins.
 
 ## Writing a player plugin
 
