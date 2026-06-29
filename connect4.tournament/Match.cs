@@ -25,6 +25,10 @@ public class Match
 
     public void RunMatch(bool showBoardAfterEachRound)
     {
+        var random = new Random();
+        // Randomly assign who goes first: true = PlayerA is game-player 1
+        bool playerAGoesFirst = random.Next(2) == 0;
+
         for (int i = 0; i < RoundsPerMatch; i++)
         {
             var currentPlayerName = "";
@@ -35,18 +39,12 @@ public class Match
             {
                 try
                 {
-                    
                     var column = 0;
-                    if (board.GetPlayer() == 1)
-                    {
-                        currentPlayerName = PlayerB.Name;
-                        column = PlayerA.GetMove(board);
-                    }
-                    else
-                    {
-                        currentPlayerName = PlayerA.Name;
-                        column = PlayerB.GetMove(board);
-                    }
+                    bool isGamePlayer1Turn = board.GetPlayer() == 1;
+                    IConnect4Player current  = (isGamePlayer1Turn == playerAGoesFirst) ? PlayerA : PlayerB;
+                    IConnect4Player opponent = (isGamePlayer1Turn == playerAGoesFirst) ? PlayerB : PlayerA;
+                    currentPlayerName = opponent.Name;
+                    column = current.GetMove(board);
                     var result = board.Move(board, column);
                     board = result.BoardState;
                     if (!result.IsValid)
@@ -61,18 +59,25 @@ public class Match
             }
             if (board.Winner != 0)
             {
-                if (board.Winner == 1)
+                // Translate game-player winner back to PlayerA/PlayerB
+                bool playerAWon = (board.Winner == 1) == playerAGoesFirst;
+                if (playerAWon)
                 {
                     PlayerAWinCount++;
+                    // Winner goes second next round
+                    playerAGoesFirst = false;
                 }
                 else
                 {
                     PlayerBWinCount++;
+                    playerAGoesFirst = true;
                 }
             }
             else
             {
                 DrawCount++;
+                // On a draw, flip who goes first
+                playerAGoesFirst = !playerAGoesFirst;
             }
             Games.Add(board);
         }
