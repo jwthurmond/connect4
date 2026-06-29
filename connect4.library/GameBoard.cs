@@ -295,13 +295,13 @@ public class GameBoard
 
         return 0;
     }
-    //TODO: Update to fix diagonal win check
     private int CheckDiagonalWin(GameBoard board, int row, int col)
     {
         var checkPlayer = board.boardState[row, col];
-        var currentPlayer = checkPlayer;
         var counter = 0;
-        //check diagonal down
+
+        // Check diagonal down-right (row+, col+)
+        var currentPlayer = checkPlayer;
         WinningSet = new List<Corrdinate>();
         while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row + counter < RowCountMax))
         {
@@ -313,23 +313,24 @@ public class GameBoard
         {
             return checkPlayer;
         }
-        //check diagonal up
-        WinningSet = new List<Corrdinate>();
 
+        // Check diagonal up-right (row-, col+)
+        // Reset both counter and currentPlayer — diagonal-down may have ended on an opponent's piece
         counter = 0;
-        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row - counter > 0))
+        currentPlayer = checkPlayer;
+        WinningSet = new List<Corrdinate>();
+        while (counter < 4 && currentPlayer == checkPlayer && (col + counter < ColumnCountMax) && (row - counter >= 0))
         {
             currentPlayer = board.boardState[row - counter, col + counter];
             WinningSet.Add(new Corrdinate { Row = row - counter, Column = col + counter });
-
             counter++;
         }
         if (counter == 4 && currentPlayer == checkPlayer)
         {
             return checkPlayer;
         }
-        WinningSet = null;
 
+        WinningSet = null;
         return 0;
     }
     public void PrintToConsole(ConsoleColor player1Color = ConsoleColor.Red,
