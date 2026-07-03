@@ -16,6 +16,7 @@ public class Match
         _initialPlayerAGoesFirst = initialPlayerAGoesFirst;
     }
     public List<GameBoard> Games { get; private set; } = new List<GameBoard>();
+    public List<bool> PlayerAStartedGame { get; private set; } = new List<bool>();
     public int PlayerAId { get; init; }
     public IConnect4Player PlayerA { get; private set; }
     public int PlayerBId { get; init; }
@@ -34,6 +35,7 @@ public class Match
 
         for (int i = 0; i < RoundsPerMatch; i++)
         {
+            PlayerAStartedGame.Add(playerAGoesFirst);
             var currentPlayerName = "";
             GameBoard board = new GameBoard();
             PlayerA.StartNewGame();

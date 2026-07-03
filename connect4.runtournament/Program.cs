@@ -3,7 +3,7 @@ using connect4.tournament;
 
 var pluginDir = args.Length > 0 ? args[0] : Path.Combine(AppContext.BaseDirectory, "plugins");
 
-var tourny = new Tournament(20);
+var tourny = new Tournament(4);
 tourny.AddPlayer(new RandomPlayer(), playerId: 1);
 tourny.AddPlayer(new IncrementBy1(), playerId: 2);
 tourny.AddPlayer(new Always4(), playerId: 3);

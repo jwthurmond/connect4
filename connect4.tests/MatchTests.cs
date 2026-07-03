@@ -22,7 +22,7 @@ public class MatchTests
 
         match.RunMatch(showBoardAfterEachRound: false);
 
-        Console.WriteLine($"Winner game1={match.Games[0].Winner}, winner game2={match.Games[1].Winner}, playerA starts={string.Join(",", playerA.FirstTurnGames)}");
+        Assert.Equal(new[] { true, true }, match.PlayerAStartedGame);
         Assert.Equal(new[] { 1, 2 }, playerA.FirstTurnGames);
         Assert.Empty(playerB.FirstTurnGames);
     }

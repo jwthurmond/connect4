@@ -2,6 +2,19 @@
 
 public class Tournament
 {
+    private static readonly ConsoleColor[] DisplayColors =
+    [
+        ConsoleColor.Red,
+        ConsoleColor.Green,
+        ConsoleColor.Blue,
+        ConsoleColor.Yellow,
+        ConsoleColor.Magenta,
+        ConsoleColor.Cyan,
+        ConsoleColor.DarkGreen,
+        ConsoleColor.DarkYellow,
+        ConsoleColor.White
+    ];
+
     public Tournament(int roundsPerMatch, bool debug = false)
     {
         RoundsPerMatch = roundsPerMatch;
@@ -108,30 +121,43 @@ public class Tournament
     }
     public void DisplayAllMatchDetails()
     {
-        foreach (var match in Matches)
+        var matches = Matches.ToList();
+        for (var index = 0; index < matches.Count; index++)
         {
-            DisplayMatchDetails(match);
+            DisplayMatchDetails(matches[index], index);
             Console.WriteLine();
         }
     }
-    public void DisplayMatchDetails(Match match)
+
+    public static (ConsoleColor playerAColor, ConsoleColor playerBColor) GetDisplayColors(Match match, int matchIndex)
     {
-        var playerAColor = match.PlayerA.Color;
-        var playerBColor = match.PlayerB.Color;
-        if (match.PlayerA.Color == match.PlayerB.Color)
+        if (match.PlayerAId == match.PlayerBId)
         {
-            if (match.PlayerA.Color != match.PlayerB.AlternateColor)
-            {
-                playerAColor = match.PlayerA.Color;
-                playerBColor = match.PlayerB.AlternateColor;
-            }
-            else
-            {
-                playerAColor = ConsoleColor.Red;
-                playerBColor = ConsoleColor.Yellow;
-            }
+            var paletteIndex = (matchIndex + match.PlayerAId) % DisplayColors.Length;
+            var playerAColor = DisplayColors[paletteIndex];
+            var playerBColor = DisplayColors[(paletteIndex + 1) % DisplayColors.Length];
+            return (playerAColor, playerBColor);
         }
-        
+
+        if (match.PlayerA.Color != match.PlayerB.Color)
+        {
+            return (match.PlayerA.Color, match.PlayerB.Color);
+        }
+
+        if (match.PlayerA.Color != match.PlayerB.AlternateColor)
+        {
+            return (match.PlayerA.Color, match.PlayerB.AlternateColor);
+        }
+
+        var fallbackPaletteIndex = (matchIndex + match.PlayerAId) % DisplayColors.Length;
+        var fallbackPlayerAColor = DisplayColors[fallbackPaletteIndex];
+        var fallbackPlayerBColor = DisplayColors[(fallbackPaletteIndex + 1) % DisplayColors.Length];
+        return (fallbackPlayerAColor, fallbackPlayerBColor);
+    }
+
+    public void DisplayMatchDetails(Match match, int matchIndex = 0)
+    {
+        var (playerAColor, playerBColor) = GetDisplayColors(match, matchIndex);
 
         //Print player names
         var playerAWins = $"[{match.PlayerAWinCount} wins]";
@@ -169,7 +195,10 @@ public class Tournament
                     var game = (block * roundsPerLine) + i;
                     if (game < match.Games.Count)
                     {
-                        match.Games[game].PrintRowToConsole(row, player1Color: playerAColor, player2Color: playerBColor);
+                        var gameAStarts = match.PlayerAStartedGame[game];
+                        var firstColor = gameAStarts ? playerAColor : playerBColor;
+                        var secondColor = gameAStarts ? playerBColor : playerAColor;
+                        match.Games[game].PrintRowToConsole(row, player1Color: firstColor, player2Color: secondColor);
                         Console.Write("  ");
                     }
                 }
