@@ -9,8 +9,11 @@ public class MatchTests
     [Fact]
     public void LosingPlayerStartsTheNextGame()
     {
-        var playerA = new DeterministicPlayer("Player A", new[] { 1, 1, 2, 1, 2, 1, 2, 1 });
-        var playerB = new DeterministicPlayer("Player B", new[] { 1, 1, 2, 1, 2, 1, 2, 1 });
+        // PlayerA (P1) fills col 2 as sacrifices; PlayerB (P2) stacks col 1 for a
+        // vertical 4-in-a-row win each game.  Because PlayerB wins game 1, the
+        // "winner goes second" rule keeps PlayerA going first in game 2 as well.
+        var playerA = new DeterministicPlayer("Player A", new[] { 2, 2, 2, 2, 2, 2, 2, 2 });
+        var playerB = new DeterministicPlayer("Player B", new[] { 1, 1, 1, 1, 1, 1, 1, 1 });
 
         var match = new Match(
             roundsPerMatch: 2,

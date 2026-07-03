@@ -4,7 +4,7 @@ using connect4.tournament;
 
 namespace connect4.runtournament;
 
-public class PlayerPluginLoadContext(string pluginPath) : AssemblyLoadContext(isCollectible: true)
+public class PlayerPluginLoadContext(string pluginPath) : AssemblyLoadContext()
 {
     private readonly AssemblyDependencyResolver _resolver = new(pluginPath);
 
