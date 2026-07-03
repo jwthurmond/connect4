@@ -4,13 +4,16 @@ namespace connect4.tournament;
 
 public class Match
 {
-    public Match(int roundsPerMatch, int playerAId, IConnect4Player playerA, int playerBId, IConnect4Player playerB)
+    private readonly bool? _initialPlayerAGoesFirst;
+
+    public Match(int roundsPerMatch, int playerAId, IConnect4Player playerA, int playerBId, IConnect4Player playerB, bool? initialPlayerAGoesFirst = null)
     {
         RoundsPerMatch = roundsPerMatch;
         PlayerAId = playerAId;
         PlayerA = playerA;
         PlayerBId = playerBId;
         PlayerB = playerB;
+        _initialPlayerAGoesFirst = initialPlayerAGoesFirst;
     }
     public List<GameBoard> Games { get; private set; } = new List<GameBoard>();
     public int PlayerAId { get; init; }
@@ -27,7 +30,7 @@ public class Match
     {
         var random = new Random();
         // Randomly assign who goes first: true = PlayerA is game-player 1
-        bool playerAGoesFirst = random.Next(2) == 0;
+        bool playerAGoesFirst = _initialPlayerAGoesFirst ?? (random.Next(2) == 0);
 
         for (int i = 0; i < RoundsPerMatch; i++)
         {
