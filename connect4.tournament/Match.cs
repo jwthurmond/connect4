@@ -47,7 +47,6 @@ public class Match
                     var column = 0;
                     bool isGamePlayer1Turn = board.GetPlayer() == 1;
                     IConnect4Player current  = (isGamePlayer1Turn == playerAGoesFirst) ? PlayerA : PlayerB;
-                    IConnect4Player opponent = (isGamePlayer1Turn == playerAGoesFirst) ? PlayerB : PlayerA;
                     currentPlayerName = current.Name;
                     column = current.GetMove(board);
                     var result = board.Move(board, column);
