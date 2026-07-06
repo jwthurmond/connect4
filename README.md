@@ -72,3 +72,13 @@ dotnet run --project connect4.runtournament -- /path/to/plugins
 4. Build the project and copy **only** the output DLL (not the dependency DLLs) into the `plugins/` directory next to `connect4.runtournament`.
 
 5. Run the tournament — your player will be discovered automatically and included in the bracket.
+
+## Testing the example plugin locally
+
+`test-plugin.sh` automates steps 4–5 for the built-in `connect4.exampleplayer` project: it builds the plugin, copies the DLL into the tournament runner's `plugins/` folder, and runs the tournament.
+
+```bash
+./test-plugin.sh
+```
+
+Use this to verify the full plugin pipeline works before writing your own player.
