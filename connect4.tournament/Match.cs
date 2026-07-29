@@ -4,15 +4,19 @@ namespace connect4.tournament;
 
 public class Match
 {
-    public Match(int roundsPerMatch, int playerAId, IConnect4Player playerA, int playerBId, IConnect4Player playerB)
+    private readonly bool? _initialPlayerAGoesFirst;
+
+    public Match(int roundsPerMatch, int playerAId, IConnect4Player playerA, int playerBId, IConnect4Player playerB, bool? initialPlayerAGoesFirst = null)
     {
         RoundsPerMatch = roundsPerMatch;
         PlayerAId = playerAId;
         PlayerA = playerA;
         PlayerBId = playerBId;
         PlayerB = playerB;
+        _initialPlayerAGoesFirst = initialPlayerAGoesFirst;
     }
     public List<GameBoard> Games { get; private set; } = new List<GameBoard>();
+    public List<bool> PlayerAStartedGame { get; private set; } = new List<bool>();
     public int PlayerAId { get; init; }
     public IConnect4Player PlayerA { get; private set; }
     public int PlayerBId { get; init; }
@@ -25,8 +29,13 @@ public class Match
 
     public void RunMatch(bool showBoardAfterEachRound)
     {
+        var random = new Random();
+        // Randomly assign who goes first: true = PlayerA is game-player 1
+        bool playerAGoesFirst = _initialPlayerAGoesFirst ?? (random.Next(2) == 0);
+
         for (int i = 0; i < RoundsPerMatch; i++)
         {
+            PlayerAStartedGame.Add(playerAGoesFirst);
             var currentPlayerName = "";
             GameBoard board = new GameBoard();
             PlayerA.StartNewGame();
@@ -35,18 +44,11 @@ public class Match
             {
                 try
                 {
-                    
                     var column = 0;
-                    if (board.GetPlayer() == 1)
-                    {
-                        currentPlayerName = PlayerB.Name;
-                        column = PlayerA.GetMove(board);
-                    }
-                    else
-                    {
-                        currentPlayerName = PlayerA.Name;
-                        column = PlayerB.GetMove(board);
-                    }
+                    bool isGamePlayer1Turn = board.GetPlayer() == 1;
+                    IConnect4Player current  = (isGamePlayer1Turn == playerAGoesFirst) ? PlayerA : PlayerB;
+                    currentPlayerName = current.Name;
+                    column = current.GetMove(board);
                     var result = board.Move(board, column);
                     board = result.BoardState;
                     if (!result.IsValid)
@@ -61,18 +63,25 @@ public class Match
             }
             if (board.Winner != 0)
             {
-                if (board.Winner == 1)
+                // Translate game-player winner back to PlayerA/PlayerB
+                bool playerAWon = (board.Winner == 1) == playerAGoesFirst;
+                if (playerAWon)
                 {
                     PlayerAWinCount++;
+                    // Winner goes second next round
+                    playerAGoesFirst = false;
                 }
                 else
                 {
                     PlayerBWinCount++;
+                    playerAGoesFirst = true;
                 }
             }
             else
             {
                 DrawCount++;
+                // On a draw, flip who goes first
+                playerAGoesFirst = !playerAGoesFirst;
             }
             Games.Add(board);
         }
